@@ -14,5 +14,33 @@
     "table_id": "Mesa-001",
     "status": "pending",
     "created_at": "2025-09-21T19:30:09.730Z"
+  },
+  {
+    "id": "1758483141473",
+    "tableId": "5",
+    "client": "fardhy7",
+    "phone": "99999999",
+    "items": [
+      {
+        "name": "Lomo Saltado",
+        "quantity": 1,
+        "price": 18
+      },
+      {
+        "name": "Pollo a la Brasa (1/4)",
+        "quantity": 1,
+        "price": 12
+      },
+      {
+        "name": "Soda",
+        "quantity": 1,
+        "price": 3
+      }
+    ],
+    "total": 33,
+    "payment": "unpaid",
+    "source": "customer_menu",
+    "status": "pending",
+    "created_at": "2025-09-21T19:32:21.473Z"
   }
 ]

@@ -31,7 +31,7 @@ export default function Orders() {
   const loadOrdersFromServer = async () => {
     try {
       console.log('🔄 Cargando pedidos desde servidor...');
-      const response = await fetch('http://localhost:3001/api/orders');
+      const response = await fetch('/api/orders');
       if (response.ok) {
         const orders = await response.json();
         setLocalOrders(orders);
@@ -146,7 +146,7 @@ export default function Orders() {
   const clearAll = async () => {
     console.log('🗑️ Limpiando todo desde servidor...');
     try {
-      const response = await fetch('http://localhost:3001/api/orders', {
+      const response = await fetch('/api/orders', {
         method: 'DELETE'
       });
       if (response.ok) {
@@ -321,7 +321,7 @@ export default function Orders() {
               };
               
               try {
-                const response = await fetch('http://localhost:3001/api/orders', {
+                const response = await fetch('/api/orders', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify(testOrder)

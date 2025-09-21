@@ -89,7 +89,7 @@ export default function CustomerMenu() {
     try {
       console.log('🔄 Enviando pedido al servidor...');
       
-      const response = await fetch('http://localhost:3001/api/orders', {
+      const response = await fetch('/api/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
