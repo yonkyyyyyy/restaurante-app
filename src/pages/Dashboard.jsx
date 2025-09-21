@@ -468,9 +468,11 @@ export default function Dashboard() {
             gap: '0.25rem',
             fontWeight: '500',
             whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            maxWidth: window.innerWidth <= 480 ? '100%' : '200px'
+            overflow: 'visible',
+            textOverflow: 'unset',
+            maxWidth: 'none',
+            flex: '1',
+            minWidth: '0'
           }}>
             <span style={{ fontSize: '1rem' }}>👋</span>
             <span>Bienvenido, <strong>{authState.user?.name}</strong></span>
@@ -488,9 +490,11 @@ export default function Dashboard() {
             gap: '0.25rem',
             fontWeight: '600',
             whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            maxWidth: window.innerWidth <= 480 ? '100%' : '150px'
+            overflow: 'visible',
+            textOverflow: 'unset',
+            maxWidth: 'none',
+            flex: '1',
+            minWidth: '0'
           }}>
             <span style={{ fontSize: '1rem' }}>👤</span>
             <span>{getRoleDisplayName(authState.user?.role)}</span>
