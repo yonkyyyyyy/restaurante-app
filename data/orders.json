@@ -63,9 +63,8 @@
     "total": 25.25,
     "payment": "unpaid",
     "source": "customer_menu",
-    "status": "preparing",
     "created_at": "2025-09-21T19:57:32.579Z",
-    "updated_at": "2025-09-21T20:50:30.696Z"
+    "updated_at": "2025-09-21T20:59:40.997Z"
   },
   {
     "id": "1758484908953",
