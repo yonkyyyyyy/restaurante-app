@@ -83,7 +83,7 @@ app.delete('/api/orders/:id', (req, res) => {
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Ruta catch-all para React Router (debe ir al final)
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
