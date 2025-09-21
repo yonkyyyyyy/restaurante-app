@@ -65,5 +65,23 @@
     "source": "customer_menu",
     "status": "pending",
     "created_at": "2025-09-21T19:57:32.579Z"
+  },
+  {
+    "id": "1758484908953",
+    "tableId": "5",
+    "client": "dddd",
+    "phone": "223232",
+    "items": [
+      {
+        "name": "Lomo Saltado",
+        "quantity": 1,
+        "price": 18
+      }
+    ],
+    "total": 18,
+    "payment": "unpaid",
+    "source": "customer_menu",
+    "status": "pending",
+    "created_at": "2025-09-21T20:01:48.953Z"
   }
 ]

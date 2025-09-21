@@ -117,8 +117,27 @@ export default function Orders() {
     actions.updateOrder(id, patch);
   }
 
-  function markPaid(id) {
-    updateOrder(id, { payment: "paid" });
+  async function markPaid(id) {
+    try {
+      console.log('💰 Marcando pedido como pagado:', id);
+      const response = await fetch(`/api/orders/${id}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: 'paid' })
+      });
+      
+      if (response.ok) {
+        console.log('✅ Pedido marcado como pagado');
+        // Recargar pedidos desde el servidor
+        loadOrdersFromServer();
+      } else {
+        console.error('❌ Error al marcar como pagado');
+      }
+    } catch (error) {
+      console.error('❌ Error al marcar como pagado:', error);
+    }
   }
 
   function cycleStatus(id) {
