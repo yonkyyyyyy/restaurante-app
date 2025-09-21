@@ -125,7 +125,7 @@ export default function Orders() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ status: 'paid' })
+        body: JSON.stringify({ payment: 'paid' })
       });
       
       if (response.ok) {
@@ -140,19 +140,35 @@ export default function Orders() {
     }
   }
 
-  function cycleStatus(id) {
-    const order = localOrders.find(o => o.id === id);
-    if (!order) return;
-    const seq = ["pending", "preparing", "ready", "delivered"];
-    const i = seq.indexOf(order.status);
-    const next = i === -1 || i === seq.length - 1 ? seq[0] : seq[i+1];
-    
-    // Actualizar en localStorage
-    const updatedOrders = localOrders.map(o => 
-      o.id === id ? { ...o, status: next } : o
-    );
-    localStorage.setItem('restaurant-orders', JSON.stringify(updatedOrders));
-    setLocalOrders(updatedOrders);
+  async function cycleStatus(id) {
+    try {
+      const order = localOrders.find(o => o.id === id);
+      if (!order) return;
+      
+      const seq = ["pending", "preparing", "ready", "delivered"];
+      const i = seq.indexOf(order.status);
+      const next = i === -1 || i === seq.length - 1 ? seq[0] : seq[i+1];
+      
+      console.log('🔄 Cambiando estado del pedido:', id, 'de', order.status, 'a', next);
+      
+      const response = await fetch(`/api/orders/${id}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: next })
+      });
+      
+      if (response.ok) {
+        console.log('✅ Estado cambiado correctamente');
+        // Recargar pedidos desde el servidor
+        loadOrdersFromServer();
+      } else {
+        console.error('❌ Error al cambiar estado');
+      }
+    } catch (error) {
+      console.error('❌ Error al cambiar estado:', error);
+    }
   }
 
   // Función única para actualizar pedidos
@@ -482,7 +498,7 @@ export default function Orders() {
                     fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem', 
                     color: '#64748b' 
                   }}>
-                    {new Date(order.createdAt).toLocaleTimeString()}
+                    {new Date(order.created_at).toLocaleTimeString()}
                   </div>
                 </div>
               </div>
@@ -564,7 +580,7 @@ export default function Orders() {
                   👁️ Ver detalle
                 </button>
                 <button 
-                  onClick={() => updateOrder(order.id, { status: 'cancelled' })} 
+                  onClick={() => cycleStatus(order.id)} 
                   style={{ 
                     fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem', 
                     color: '#ef4444', 

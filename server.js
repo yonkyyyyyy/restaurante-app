@@ -80,22 +80,31 @@ app.post('/api/orders', (req, res) => {
 app.put('/api/orders/:id/status', (req, res) => {
   try {
     const { id } = req.params;
-    const { status } = req.body;
+    const { status, payment } = req.body;
     
     const orderIndex = orders.findIndex(order => order.id === id);
     if (orderIndex === -1) {
       return res.status(404).json({ error: 'Pedido no encontrado' });
     }
     
-    orders[orderIndex].status = status;
+    // Actualizar status si se proporciona
+    if (status) {
+      orders[orderIndex].status = status;
+    }
+    
+    // Actualizar payment si se proporciona
+    if (payment) {
+      orders[orderIndex].payment = payment;
+    }
+    
     orders[orderIndex].updated_at = new Date().toISOString();
     saveOrders();
     
-    console.log('✅ Estado actualizado:', orders[orderIndex]);
+    console.log('✅ Pedido actualizado:', orders[orderIndex]);
     res.json(orders[orderIndex]);
   } catch (error) {
-    console.error('❌ Error al actualizar estado:', error);
-    res.status(500).json({ error: 'Error al actualizar estado' });
+    console.error('❌ Error al actualizar pedido:', error);
+    res.status(500).json({ error: 'Error al actualizar pedido' });
   }
 });
 

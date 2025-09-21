@@ -83,5 +83,28 @@
     "source": "customer_menu",
     "status": "pending",
     "created_at": "2025-09-21T20:01:48.953Z"
+  },
+  {
+    "id": "1758485469009",
+    "tableId": "5",
+    "client": "Ariana",
+    "phone": "904443",
+    "items": [
+      {
+        "name": "Lomo Saltado",
+        "quantity": 1,
+        "price": 18
+      },
+      {
+        "name": "Pollo a la Brasa (1/4)",
+        "quantity": 1,
+        "price": 12
+      }
+    ],
+    "total": 30,
+    "payment": "unpaid",
+    "source": "customer_menu",
+    "status": "pending",
+    "created_at": "2025-09-21T20:11:09.009Z"
   }
 ]
