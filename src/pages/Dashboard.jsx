@@ -451,37 +451,46 @@ export default function Dashboard() {
           display: 'flex',
           flexDirection: window.innerWidth <= 480 ? 'column' : 'row',
           alignItems: window.innerWidth <= 480 ? 'center' : 'flex-start',
-          gap: '0.75rem',
-          flexWrap: 'wrap'
+          gap: window.innerWidth <= 480 ? '0.5rem' : '0.75rem',
+          flexWrap: 'wrap',
+          width: '100%'
         }}>
           <div style={{ 
             color: '#64748b', 
-            fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem',
+            fontSize: window.innerWidth <= 768 ? '0.75rem' : '0.75rem',
             margin: 0,
             background: '#f0f9ff',
-            padding: '0.5rem 1rem',
-            borderRadius: '8px',
+            padding: window.innerWidth <= 480 ? '0.375rem 0.75rem' : '0.5rem 1rem',
+            borderRadius: '6px',
             border: '1px solid #bae6fd',
             display: 'flex',
             alignItems: 'center',
             gap: '0.25rem',
-            fontWeight: '500'
+            fontWeight: '500',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            maxWidth: window.innerWidth <= 480 ? '100%' : '200px'
           }}>
             <span style={{ fontSize: '1rem' }}>👋</span>
             <span>Bienvenido, <strong>{authState.user?.name}</strong></span>
           </div>
           <div style={{ 
             color: '#059669', 
-            fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem',
+            fontSize: window.innerWidth <= 768 ? '0.75rem' : '0.75rem',
             margin: 0,
             background: '#ecfdf5',
-            padding: '0.5rem 1rem',
-            borderRadius: '8px',
+            padding: window.innerWidth <= 480 ? '0.375rem 0.75rem' : '0.5rem 1rem',
+            borderRadius: '6px',
             border: '1px solid #a7f3d0',
             display: 'flex',
             alignItems: 'center',
             gap: '0.25rem',
-            fontWeight: '600'
+            fontWeight: '600',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            maxWidth: window.innerWidth <= 480 ? '100%' : '150px'
           }}>
             <span style={{ fontSize: '1rem' }}>👤</span>
             <span>{getRoleDisplayName(authState.user?.role)}</span>

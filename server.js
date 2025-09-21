@@ -19,21 +19,62 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 app.use(cors());
 app.use(express.json());
 
+// Almacenamiento persistente en archivo JSON
+import fs from 'fs';
+const ordersFile = path.join(__dirname, 'data', 'orders.json');
+
+// Crear directorio data si no existe
+if (!fs.existsSync(path.dirname(ordersFile))) {
+  fs.mkdirSync(path.dirname(ordersFile), { recursive: true });
+}
+
+// Cargar pedidos desde archivo
+let tempOrders = [];
+try {
+  if (fs.existsSync(ordersFile)) {
+    const data = fs.readFileSync(ordersFile, 'utf8');
+    tempOrders = JSON.parse(data);
+    console.log('📁 Pedidos cargados desde archivo:', tempOrders.length);
+  }
+} catch (error) {
+  console.log('⚠️ Error al cargar pedidos desde archivo:', error.message);
+  tempOrders = [];
+}
+
+// Función para guardar pedidos
+const saveOrders = () => {
+  try {
+    fs.writeFileSync(ordersFile, JSON.stringify(tempOrders, null, 2));
+    console.log('💾 Pedidos guardados en archivo');
+  } catch (error) {
+    console.error('❌ Error al guardar pedidos:', error);
+  }
+};
+
 // Rutas de API
 app.get('/api/orders', async (req, res) => {
   try {
-    const { data, error } = await supabase
-      .from('orders')
-      .select('*')
-      .order('created_at', { ascending: false });
-    
-    if (error) {
-      console.error('❌ Error al obtener pedidos:', error);
-      return res.status(500).json({ error: 'Error al obtener pedidos' });
+    // Intentar conectar a Supabase primero
+    try {
+      const { data, error } = await supabase
+        .from('orders')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.log('⚠️ Error de Supabase, usando almacenamiento persistente:', error.message);
+        res.json(tempOrders);
+        return;
+      }
+      
+      console.log('📋 Obteniendo pedidos desde Supabase:', data.length);
+      res.json(data || []);
+      return;
+    } catch (supabaseError) {
+      console.log('⚠️ Supabase no disponible, usando almacenamiento persistente:', supabaseError.message);
+      res.json(tempOrders);
+      return;
     }
-    
-    console.log('📋 Obteniendo pedidos:', data.length);
-    res.json(data || []);
   } catch (error) {
     console.error('❌ Error al obtener pedidos:', error);
     res.status(500).json({ error: 'Error al obtener pedidos' });
@@ -43,24 +84,40 @@ app.get('/api/orders', async (req, res) => {
 app.post('/api/orders', async (req, res) => {
   try {
     const orderData = {
+      id: Date.now().toString(),
       ...req.body,
       status: 'pending',
       created_at: new Date().toISOString()
     };
     
-    const { data, error } = await supabase
-      .from('orders')
-      .insert([orderData])
-      .select()
-      .single();
-    
-    if (error) {
-      console.error('❌ Error al crear pedido:', error);
-      return res.status(500).json({ error: 'Error al crear pedido' });
+    // Intentar conectar a Supabase primero
+    try {
+      const { data, error } = await supabase
+        .from('orders')
+        .insert([orderData])
+        .select()
+        .single();
+      
+      if (error) {
+        console.log('⚠️ Error de Supabase, usando almacenamiento persistente:', error.message);
+        tempOrders.push(orderData);
+        saveOrders();
+        console.log('📝 Nuevo pedido creado (persistente):', orderData);
+        res.json(orderData);
+        return;
+      }
+      
+      console.log('📝 Nuevo pedido creado en Supabase:', data);
+      res.json(data);
+      return;
+    } catch (supabaseError) {
+      console.log('⚠️ Supabase no disponible, usando almacenamiento persistente:', supabaseError.message);
+      tempOrders.push(orderData);
+      saveOrders();
+      console.log('📝 Nuevo pedido creado (persistente):', orderData);
+      res.json(orderData);
+      return;
     }
-    
-    console.log('📝 Nuevo pedido creado:', data);
-    res.json(data);
   } catch (error) {
     console.error('❌ Error al crear pedido:', error);
     res.status(500).json({ error: 'Error al crear pedido' });
