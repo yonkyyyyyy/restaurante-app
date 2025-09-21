@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1758483009730",
+    "total": 18,
+    "client_phone": "123456789",
+    "items": [
+      {
+        "price": 18,
+        "quantity": 1,
+        "name": "Lomo Saltado"
+      }
+    ],
+    "client_name": "Cliente Test",
+    "table_id": "Mesa-001",
+    "status": "pending",
+    "created_at": "2025-09-21T19:30:09.730Z"
+  }
+]
