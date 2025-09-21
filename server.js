@@ -83,8 +83,13 @@ app.delete('/api/orders/:id', (req, res) => {
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Ruta catch-all para React Router (debe ir al final)
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+app.get('*', (req, res) => {
+  // Solo servir index.html para rutas que no sean API
+  if (!req.path.startsWith('/api')) {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  } else {
+    res.status(404).json({ error: 'API endpoint not found' });
+  }
 });
 
 app.listen(PORT, '0.0.0.0', () => {
