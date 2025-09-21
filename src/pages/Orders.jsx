@@ -510,6 +510,19 @@ export default function Orders() {
                     {order.status}
                   </div>
                   <div style={{ 
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    padding: '0.25rem 0.75rem',
+                    borderRadius: '9999px',
+                    fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem',
+                    fontWeight: '500',
+                    background: order.payment === 'paid' ? '#d1fae5' : '#fef3c7',
+                    color: order.payment === 'paid' ? '#065f46' : '#92400e'
+                  }}>
+                    {order.payment === 'paid' ? '💰 Pagado' : '⏳ Pendiente'}
+                  </div>
+                  <div style={{ 
                     fontSize: window.innerWidth <= 768 ? '1.25rem' : '1.125rem', 
                     fontWeight: '700', 
                     color: '#1e293b' 
