@@ -140,6 +140,28 @@ export default function Orders() {
     }
   }
 
+  async function deleteOrder(id) {
+    try {
+      console.log('🗑️ Eliminando pedido:', id);
+      const response = await fetch(`/api/orders/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      
+      if (response.ok) {
+        console.log('✅ Pedido eliminado correctamente');
+        // Recargar pedidos desde el servidor
+        loadOrdersFromServer();
+      } else {
+        console.error('❌ Error al eliminar pedido');
+      }
+    } catch (error) {
+      console.error('❌ Error al eliminar pedido:', error);
+    }
+  }
+
   async function cycleStatus(id) {
     try {
       const order = localOrders.find(o => o.id === id);
@@ -580,7 +602,7 @@ export default function Orders() {
                   👁️ Ver detalle
                 </button>
                 <button 
-                  onClick={() => cycleStatus(order.id)} 
+                  onClick={() => deleteOrder(order.id)} 
                   style={{ 
                     fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem', 
                     color: '#ef4444', 
