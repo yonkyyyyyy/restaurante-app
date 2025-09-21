@@ -445,7 +445,7 @@ export default function Dashboard() {
           marginBottom: '0.75rem',
           margin: 0
         }}>
-          📊 Dashboard
+          📊 Dashboard - Sistema Profesional
         </h1>
         <div style={{
           display: 'flex',
