@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: restaurante-backend
+    env: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: SUPABASE_URL
+        value: https://qctynsnqagumashmiwxn.supabase.co
+      - key: SUPABASE_KEY
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFjdHluc25xYWd1bWFzaG1pd3huIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg0MjE2NTgsImV4cCI6MjA3Mzk5NzY1OH0.nI3duiLYsWG8TLeNaFv6e3j09qke8kqNcIERJql_aYo
+      - key: JWT_SECRET
+        value: restaurante-super-secret-jwt-key-2024
+      - key: PORT
+        value: 3001
+
