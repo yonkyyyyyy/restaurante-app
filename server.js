@@ -169,6 +169,11 @@ app.get('/api/reports/orders', authenticateToken, authorizeRole(['admin']), asyn
 // Servir archivos estáticos
 app.use(express.static(path.join(__dirname, 'dist')));
 
+// Ruta catch-all para React Router (debe ir al final)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Servidor profesional corriendo en puerto ${PORT}`);
   console.log(`📱 API disponible en http://0.0.0.0:${PORT}/api`);
