@@ -42,5 +42,28 @@
     "source": "customer_menu",
     "status": "pending",
     "created_at": "2025-09-21T19:32:21.473Z"
+  },
+  {
+    "id": "1758484652579",
+    "tableId": "5",
+    "client": "Fardhy",
+    "phone": "5554444454",
+    "items": [
+      {
+        "name": "Lomo Saltado",
+        "quantity": 1,
+        "price": 18
+      },
+      {
+        "name": "Chicha Morada",
+        "quantity": 1,
+        "price": 7.25
+      }
+    ],
+    "total": 25.25,
+    "payment": "unpaid",
+    "source": "customer_menu",
+    "status": "pending",
+    "created_at": "2025-09-21T19:57:32.579Z"
   }
 ]
