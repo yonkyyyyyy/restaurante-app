@@ -14,31 +14,81 @@ function MetricCard({ title, value, change, icon, color = 'blue' }) {
   };
 
   return (
-    <div className="metric-card">
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-        <div className="metric-icon" style={colorStyles[color]}>
-          <svg style={{ width: '24px', height: '24px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div className="metric-card" style={{
+      background: 'white',
+      borderRadius: '12px',
+      padding: window.innerWidth <= 768 ? '1.25rem' : '1.5rem',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+      border: '1px solid #e2e8f0',
+      transition: 'all 0.2s ease'
+    }}>
+      <div style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        marginBottom: '1rem',
+        flexDirection: window.innerWidth <= 480 ? 'column' : 'row',
+        textAlign: window.innerWidth <= 480 ? 'center' : 'left',
+        gap: window.innerWidth <= 480 ? '0.75rem' : '0'
+      }}>
+        <div className="metric-icon" style={{
+          ...colorStyles[color],
+          padding: window.innerWidth <= 768 ? '0.75rem' : '0.5rem',
+          borderRadius: '12px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minWidth: window.innerWidth <= 768 ? '48px' : '40px',
+          minHeight: window.innerWidth <= 768 ? '48px' : '40px'
+        }}>
+          <svg style={{ 
+            width: window.innerWidth <= 768 ? '28px' : '24px', 
+            height: window.innerWidth <= 768 ? '28px' : '24px' 
+          }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={icon} />
           </svg>
         </div>
-        <div style={{ marginLeft: '1rem', flex: 1 }}>
-          <div className="metric-label">{title}</div>
-          <div className="metric-value">{value}</div>
+        <div style={{ 
+          marginLeft: window.innerWidth <= 480 ? '0' : '1rem', 
+          flex: 1 
+        }}>
+          <div className="metric-label" style={{
+            fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem',
+            color: '#64748b',
+            fontWeight: '500',
+            marginBottom: '0.25rem'
+          }}>
+            {title}
+          </div>
+          <div className="metric-value" style={{
+            fontSize: window.innerWidth <= 768 ? '1.75rem' : '1.5rem',
+            fontWeight: '700',
+            color: '#1e293b'
+          }}>
+            {value}
+          </div>
         </div>
       </div>
       {change && (
         <div style={{
           paddingTop: '1rem',
           borderTop: '1px solid #e2e8f0',
-          fontSize: '0.875rem'
+          fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: window.innerWidth <= 480 ? 'center' : 'flex-start',
+          gap: '0.25rem',
+          flexWrap: 'wrap'
         }}>
           <span style={{
-            fontWeight: '500',
-            color: change > 0 ? '#10b981' : '#ef4444'
+            fontWeight: '600',
+            color: change > 0 ? '#10b981' : '#ef4444',
+            background: change > 0 ? '#ecfdf5' : '#fef2f2',
+            padding: '0.25rem 0.5rem',
+            borderRadius: '6px'
           }}>
-            {change > 0 ? '+' : ''}{change}%
+            {change > 0 ? '↗️' : '↘️'} {change > 0 ? '+' : ''}{change}%
           </span>
-          <span style={{ color: '#64748b', marginLeft: '0.25rem' }}>vs mes anterior</span>
+          <span style={{ color: '#64748b' }}>vs mes anterior</span>
         </div>
       )}
     </div>
@@ -62,69 +112,143 @@ function RecentOrders() {
   };
 
   return (
-    <div className="card">
-      <div className="card-header">
-        <h3 className="card-title">Pedidos Recientes</h3>
+    <div className="card" style={{
+      background: 'white',
+      borderRadius: '12px',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+      border: '1px solid #e2e8f0',
+      overflow: 'hidden'
+    }}>
+      <div className="card-header" style={{
+        padding: window.innerWidth <= 768 ? '1rem' : '1.25rem',
+        borderBottom: '1px solid #e2e8f0',
+        background: '#f8fafc'
+      }}>
+        <h3 className="card-title" style={{
+          fontSize: window.innerWidth <= 768 ? '1.125rem' : '1rem',
+          fontWeight: '600',
+          color: '#1e293b',
+          margin: 0
+        }}>
+          📋 Pedidos Recientes
+        </h3>
       </div>
-      <div>
+      <div style={{ padding: window.innerWidth <= 768 ? '1rem' : '1.25rem' }}>
         {recentOrders.length === 0 ? (
-          <p style={{ textAlign: 'center', color: '#64748b', fontSize: '0.875rem', padding: '2rem' }}>
-            No hay pedidos recientes
-          </p>
+          <div style={{
+            textAlign: 'center',
+            color: '#64748b',
+            padding: '2rem 1rem'
+          }}>
+            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📋</div>
+            <p style={{ 
+              fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
+              margin: 0
+            }}>
+              No hay pedidos recientes
+            </p>
+          </div>
         ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: window.innerWidth <= 768 ? '0.75rem' : '1rem' 
+          }}>
             {recentOrders.map((order) => (
               <div key={order.id} style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '1rem',
-                padding: '0.75rem',
+                gap: window.innerWidth <= 768 ? '0.75rem' : '1rem',
+                padding: window.innerWidth <= 768 ? '1rem' : '0.75rem',
                 background: '#f8fafc',
-                borderRadius: '8px'
+                borderRadius: '8px',
+                border: '1px solid #e2e8f0',
+                flexDirection: window.innerWidth <= 480 ? 'column' : 'row',
+                textAlign: window.innerWidth <= 480 ? 'center' : 'left'
               }}>
                 <div style={{
-                  width: '32px',
-                  height: '32px',
+                  width: window.innerWidth <= 768 ? '40px' : '32px',
+                  height: window.innerWidth <= 768 ? '40px' : '32px',
                   background: '#dbeafe',
                   borderRadius: '50%',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  flexShrink: 0
+                  flexShrink: 0,
+                  marginBottom: window.innerWidth <= 480 ? '0.5rem' : '0'
                 }}>
-                  <span style={{ fontSize: '0.75rem', fontWeight: '500', color: '#2563eb' }}>
+                  <span style={{ 
+                    fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem', 
+                    fontWeight: '600', 
+                    color: '#2563eb' 
+                  }}>
                     #{order.id.toString().slice(-3)}
                   </span>
                 </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <p style={{ fontSize: '0.875rem', fontWeight: '500', color: '#1e293b', marginBottom: '0.25rem' }}>
+                <div style={{ 
+                  flex: 1, 
+                  minWidth: 0,
+                  marginBottom: window.innerWidth <= 480 ? '0.5rem' : '0'
+                }}>
+                  <p style={{ 
+                    fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem', 
+                    fontWeight: '600', 
+                    color: '#1e293b', 
+                    marginBottom: '0.25rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: window.innerWidth <= 480 ? 'center' : 'flex-start',
+                    flexWrap: 'wrap',
+                    gap: '0.5rem'
+                  }}>
                     {order.client}
                     {order.source === 'customer_menu' && (
                       <span style={{
-                        marginLeft: '0.5rem',
-                        fontSize: '0.625rem',
+                        fontSize: window.innerWidth <= 768 ? '0.75rem' : '0.625rem',
                         background: '#dbeafe',
                         color: '#1e40af',
-                        padding: '0.125rem 0.375rem',
-                        borderRadius: '4px'
+                        padding: '0.25rem 0.5rem',
+                        borderRadius: '6px',
+                        fontWeight: '500'
                       }}>
                         📱 Digital
                       </span>
                     )}
                   </p>
-                  <p style={{ fontSize: '0.75rem', color: '#64748b' }}>
-                    {order.items.length} items • S/ {order.total.toFixed(2)}
-                    {order.tableId && ` • Mesa ${order.tableId}`}
+                  <p style={{ 
+                    fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem', 
+                    color: '#64748b',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '0.5rem',
+                    justifyContent: window.innerWidth <= 480 ? 'center' : 'flex-start'
+                  }}>
+                    <span>{order.items.length} items</span>
+                    <span>•</span>
+                    <span style={{ fontWeight: '600', color: '#059669' }}>
+                      S/ {order.total.toFixed(2)}
+                    </span>
+                    {order.tableId && (
+                      <>
+                        <span>•</span>
+                        <span>Mesa {order.tableId}</span>
+                      </>
+                    )}
                   </p>
                 </div>
-                <div style={{ flexShrink: 0 }}>
+                <div style={{ 
+                  flexShrink: 0,
+                  width: window.innerWidth <= 480 ? '100%' : 'auto'
+                }}>
                   <span style={{
                     display: 'inline-flex',
                     alignItems: 'center',
-                    padding: '0.25rem 0.75rem',
+                    padding: window.innerWidth <= 768 ? '0.5rem 1rem' : '0.25rem 0.75rem',
                     borderRadius: '9999px',
-                    fontSize: '0.75rem',
-                    fontWeight: '500',
+                    fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem',
+                    fontWeight: '600',
+                    width: window.innerWidth <= 480 ? '100%' : 'auto',
+                    justifyContent: 'center',
                     ...getStatusStyle(order.status)
                   }}>
                     {order.status}
@@ -160,48 +284,109 @@ function TopProducts() {
     .slice(0, 5);
 
   return (
-    <div className="card">
-      <div className="card-header">
-        <h3 className="card-title">Productos Más Vendidos</h3>
+    <div className="card" style={{
+      background: 'white',
+      borderRadius: '12px',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+      border: '1px solid #e2e8f0',
+      overflow: 'hidden'
+    }}>
+      <div className="card-header" style={{
+        padding: window.innerWidth <= 768 ? '1rem' : '1.25rem',
+        borderBottom: '1px solid #e2e8f0',
+        background: '#f8fafc'
+      }}>
+        <h3 className="card-title" style={{
+          fontSize: window.innerWidth <= 768 ? '1.125rem' : '1rem',
+          fontWeight: '600',
+          color: '#1e293b',
+          margin: 0
+        }}>
+          🏆 Productos Más Vendidos
+        </h3>
       </div>
-      <div>
+      <div style={{ padding: window.innerWidth <= 768 ? '1rem' : '1.25rem' }}>
         {topProducts.length === 0 ? (
-          <p style={{ textAlign: 'center', color: '#64748b', fontSize: '0.875rem', padding: '2rem' }}>
-            No hay datos de ventas
-          </p>
+          <div style={{
+            textAlign: 'center',
+            color: '#64748b',
+            padding: '2rem 1rem'
+          }}>
+            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🏆</div>
+            <p style={{ 
+              fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
+              margin: 0
+            }}>
+              No hay datos de ventas
+            </p>
+          </div>
         ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: window.innerWidth <= 768 ? '0.75rem' : '0.75rem' 
+          }}>
             {topProducts.map(([product, quantity], index) => (
               <div key={product} style={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                padding: '0.75rem',
+                padding: window.innerWidth <= 768 ? '1rem' : '0.75rem',
                 background: '#f8fafc',
-                borderRadius: '8px'
+                borderRadius: '8px',
+                border: '1px solid #e2e8f0',
+                flexDirection: window.innerWidth <= 480 ? 'column' : 'row',
+                textAlign: window.innerWidth <= 480 ? 'center' : 'left',
+                gap: window.innerWidth <= 480 ? '0.75rem' : '0'
               }}>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center',
+                  flex: 1,
+                  justifyContent: window.innerWidth <= 480 ? 'center' : 'flex-start'
+                }}>
                   <div style={{
-                    width: '24px',
-                    height: '24px',
-                    background: '#dbeafe',
+                    width: window.innerWidth <= 768 ? '32px' : '24px',
+                    height: window.innerWidth <= 768 ? '32px' : '24px',
+                    background: index < 3 ? '#fbbf24' : '#dbeafe',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    marginRight: '0.75rem',
-                    flexShrink: 0
+                    marginRight: window.innerWidth <= 768 ? '1rem' : '0.75rem',
+                    flexShrink: 0,
+                    marginBottom: window.innerWidth <= 480 ? '0.5rem' : '0'
                   }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: '500', color: '#2563eb' }}>
-                      {index + 1}
+                    <span style={{ 
+                      fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem', 
+                      fontWeight: '600', 
+                      color: index < 3 ? '#92400e' : '#2563eb' 
+                    }}>
+                      {index < 3 ? '🏆' : index + 1}
                     </span>
                   </div>
-                  <p style={{ fontSize: '0.875rem', fontWeight: '500', color: '#1e293b' }}>
+                  <p style={{ 
+                    fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem', 
+                    fontWeight: '600', 
+                    color: '#1e293b',
+                    margin: 0
+                  }}>
                     {product}
                   </p>
                 </div>
-                <div style={{ fontSize: '0.875rem', color: '#64748b' }}>
-                  {quantity} vendidos
+                <div style={{ 
+                  fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem', 
+                  color: '#64748b',
+                  fontWeight: '600',
+                  background: '#e2e8f0',
+                  padding: '0.25rem 0.75rem',
+                  borderRadius: '6px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.25rem'
+                }}>
+                  <span>{quantity}</span>
+                  <span style={{ fontSize: '0.75rem' }}>vendidos</span>
                 </div>
               </div>
             ))}
@@ -235,23 +420,44 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="fade-in">
+    <div className="fade-in" style={{
+      minHeight: '100vh',
+      background: '#f8fafc',
+      padding: window.innerWidth <= 768 ? '1rem' : '1.5rem'
+    }}>
       {/* Header */}
-      <div className="mb-6">
-        <h1 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#1e293b', marginBottom: '0.5rem' }}>
-          Dashboard
+      <div style={{ 
+        marginBottom: window.innerWidth <= 768 ? '1.5rem' : '2rem',
+        textAlign: window.innerWidth <= 480 ? 'center' : 'left'
+      }}>
+        <h1 style={{ 
+          fontSize: window.innerWidth <= 768 ? '1.75rem' : '2rem', 
+          fontWeight: 'bold', 
+          color: '#1e293b', 
+          marginBottom: '0.5rem',
+          margin: 0
+        }}>
+          📊 Dashboard
         </h1>
-        <p style={{ color: '#64748b', fontSize: '0.875rem' }}>
-          Bienvenido, {authState.user?.name} - {getRoleDisplayName(authState.user?.role)}
+        <p style={{ 
+          color: '#64748b', 
+          fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
+          margin: 0,
+          background: '#e2e8f0',
+          padding: '0.5rem 1rem',
+          borderRadius: '8px',
+          display: 'inline-block'
+        }}>
+          👋 Bienvenido, {authState.user?.name} - {getRoleDisplayName(authState.user?.role)}
         </p>
       </div>
 
       {/* Métricas principales */}
       <div style={{ 
         display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
-        gap: '1.25rem',
-        marginBottom: '2rem'
+        gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(auto-fit, minmax(250px, 1fr))', 
+        gap: window.innerWidth <= 768 ? '1rem' : '1.25rem',
+        marginBottom: window.innerWidth <= 768 ? '1.5rem' : '2rem'
       }}>
         <MetricCard
           title="Total Pedidos"
@@ -286,20 +492,43 @@ export default function Dashboard() {
       {/* Contenido principal */}
       <div style={{ 
         display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', 
-        gap: '1.5rem',
-        marginBottom: '2rem'
+        gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(auto-fit, minmax(400px, 1fr))', 
+        gap: window.innerWidth <= 768 ? '1rem' : '1.5rem',
+        marginBottom: window.innerWidth <= 768 ? '1.5rem' : '2rem'
       }}>
         <RecentOrders />
         <TopProducts />
       </div>
 
-          {/* Botón de prueba para simular pedido */}
-          <div className="card" style={{ marginBottom: '1rem' }}>
-            <div className="card-header">
-              <h3 className="card-title">🧪 Prueba del Sistema</h3>
+          {/* Botón de prueba para simular pedido - Responsive */}
+          <div className="card" style={{ 
+            marginBottom: '1rem',
+            background: 'white',
+            borderRadius: '12px',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+            border: '1px solid #e2e8f0',
+            overflow: 'hidden'
+          }}>
+            <div className="card-header" style={{
+              padding: window.innerWidth <= 768 ? '1rem' : '1.25rem',
+              borderBottom: '1px solid #e2e8f0',
+              background: '#f8fafc'
+            }}>
+              <h3 className="card-title" style={{
+                fontSize: window.innerWidth <= 768 ? '1.125rem' : '1rem',
+                fontWeight: '600',
+                color: '#1e293b',
+                margin: 0
+              }}>
+                🧪 Prueba del Sistema
+              </h3>
             </div>
-            <div style={{ padding: '1rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <div style={{ 
+              padding: window.innerWidth <= 768 ? '1rem' : '1rem', 
+              display: 'grid',
+              gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: window.innerWidth <= 768 ? '0.75rem' : '1rem'
+            }}>
               <button 
                 onClick={() => {
                   const testOrder = {
@@ -319,15 +548,21 @@ export default function Dashboard() {
                 style={{
                   background: '#10b981',
                   color: 'white',
-                  padding: '0.75rem 1.5rem',
+                  padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.75rem 1.5rem',
                   borderRadius: '8px',
                   border: 'none',
                   cursor: 'pointer',
-                  fontSize: '0.875rem',
-                  fontWeight: '500'
+                  fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.875rem',
+                  fontWeight: '600',
+                  minHeight: '44px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.5rem'
                 }}
               >
-                🧪 Crear Pedido de Prueba
+                🧪 <span style={{ display: window.innerWidth <= 480 ? 'none' : 'inline' }}>Crear Pedido de Prueba</span>
+                <span style={{ display: window.innerWidth <= 480 ? 'inline' : 'none' }}>Prueba</span>
               </button>
               
               <button 
@@ -339,15 +574,21 @@ export default function Dashboard() {
                 style={{
                   background: '#2563eb',
                   color: 'white',
-                  padding: '0.75rem 1.5rem',
+                  padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.75rem 1.5rem',
                   borderRadius: '8px',
                   border: 'none',
                   cursor: 'pointer',
-                  fontSize: '0.875rem',
-                  fontWeight: '500'
+                  fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.875rem',
+                  fontWeight: '600',
+                  minHeight: '44px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.5rem'
                 }}
               >
-                🔍 Ver Estado
+                🔍 <span style={{ display: window.innerWidth <= 480 ? 'none' : 'inline' }}>Ver Estado</span>
+                <span style={{ display: window.innerWidth <= 480 ? 'inline' : 'none' }}>Estado</span>
               </button>
               
               <button 
@@ -359,15 +600,21 @@ export default function Dashboard() {
                 style={{
                   background: '#ef4444',
                   color: 'white',
-                  padding: '0.75rem 1.5rem',
+                  padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.75rem 1.5rem',
                   borderRadius: '8px',
                   border: 'none',
                   cursor: 'pointer',
-                  fontSize: '0.875rem',
-                  fontWeight: '500'
+                  fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.875rem',
+                  fontWeight: '600',
+                  minHeight: '44px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.5rem'
                 }}
               >
-                🗑️ Limpiar y Recargar
+                🗑️ <span style={{ display: window.innerWidth <= 480 ? 'none' : 'inline' }}>Limpiar y Recargar</span>
+                <span style={{ display: window.innerWidth <= 480 ? 'inline' : 'none' }}>Limpiar</span>
               </button>
               
               <button 
@@ -380,117 +627,176 @@ export default function Dashboard() {
                 style={{
                   background: '#8b5cf6',
                   color: 'white',
-                  padding: '0.75rem 1.5rem',
+                  padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.75rem 1.5rem',
                   borderRadius: '8px',
                   border: 'none',
                   cursor: 'pointer',
-                  fontSize: '0.875rem',
-                  fontWeight: '500'
+                  fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.875rem',
+                  fontWeight: '600',
+                  minHeight: '44px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.5rem'
                 }}
               >
-                🔍 Ver localStorage
+                🔍 <span style={{ display: window.innerWidth <= 480 ? 'none' : 'inline' }}>Ver localStorage</span>
+                <span style={{ display: window.innerWidth <= 480 ? 'inline' : 'none' }}>Storage</span>
               </button>
             </div>
           </div>
 
-          {/* Acciones rápidas basadas en el rol */}
-          <div className="card">
-            <div className="card-header">
-              <h3 className="card-title">Acciones Rápidas</h3>
-            </div>
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
-          gap: '1rem' 
-        }}>
-          {authState.user?.role === ROLES.EMBALADOR && (
-            <button 
-              onClick={() => window.location.href = '/orders'}
-              style={{
-                padding: '1.5rem',
-                border: '2px dashed #d1d5db',
-                borderRadius: '12px',
-                background: 'transparent',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                textAlign: 'center'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.borderColor = '#10b981';
-                e.target.style.background = '#ecfdf5';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.borderColor = '#d1d5db';
-                e.target.style.background = 'transparent';
-              }}
-            >
-              <div>
-                <svg style={{ width: '32px', height: '32px', color: '#9ca3af', margin: '0 auto 0.5rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                </svg>
-                <p style={{ fontSize: '0.875rem', fontWeight: '500', color: '#1e293b' }}>Gestionar Pedidos</p>
-              </div>
-            </button>
-          )}
-          
-          
-          {authState.user?.role === ROLES.CAJERO && (
-            <button style={{
-              padding: '1.5rem',
-              border: '2px dashed #d1d5db',
-              borderRadius: '12px',
-              background: 'transparent',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
-              textAlign: 'center'
+          {/* Acciones rápidas basadas en el rol - Responsive */}
+          <div className="card" style={{
+            background: 'white',
+            borderRadius: '12px',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+            border: '1px solid #e2e8f0',
+            overflow: 'hidden'
+          }}>
+            <div className="card-header" style={{
+              padding: window.innerWidth <= 768 ? '1rem' : '1.25rem',
+              borderBottom: '1px solid #e2e8f0',
+              background: '#f8fafc'
             }}>
-              <div>
-                <svg style={{ width: '32px', height: '32px', color: '#9ca3af', margin: '0 auto 0.5rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                <p style={{ fontSize: '0.875rem', fontWeight: '500', color: '#1e293b' }}>Facturación</p>
-              </div>
-            </button>
-          )}
-          
-          {authState.user?.role === ROLES.ADMIN && (
-            <React.Fragment>
-              <button style={{
-                padding: '1.5rem',
-                border: '2px dashed #d1d5db',
-                borderRadius: '12px',
-                background: 'transparent',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                textAlign: 'center'
+              <h3 className="card-title" style={{
+                fontSize: window.innerWidth <= 768 ? '1.125rem' : '1rem',
+                fontWeight: '600',
+                color: '#1e293b',
+                margin: 0
               }}>
-                <div>
-                  <svg style={{ width: '32px', height: '32px', color: '#9ca3af', margin: '0 auto 0.5rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-                  </svg>
-                  <p style={{ fontSize: '0.875rem', fontWeight: '500', color: '#1e293b' }}>Empleados</p>
-                </div>
-              </button>
-              <button style={{
-                padding: '1.5rem',
-                border: '2px dashed #d1d5db',
-                borderRadius: '12px',
-                background: 'transparent',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                textAlign: 'center'
-              }}>
-                <div>
-                  <svg style={{ width: '32px', height: '32px', color: '#9ca3af', margin: '0 auto 0.5rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                  </svg>
-                  <p style={{ fontSize: '0.875rem', fontWeight: '500', color: '#1e293b' }}>Inventario</p>
-                </div>
-              </button>
-            </React.Fragment>
-          )}
-        </div>
-      </div>
+                ⚡ Acciones Rápidas
+              </h3>
+            </div>
+            <div style={{ 
+              padding: window.innerWidth <= 768 ? '1rem' : '1.25rem',
+              display: 'grid', 
+              gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(auto-fit, minmax(200px, 1fr))', 
+              gap: window.innerWidth <= 768 ? '0.75rem' : '1rem' 
+            }}>
+              {authState.user?.role === ROLES.EMBALADOR && (
+                <button 
+                  onClick={() => window.location.href = '/orders'}
+                  style={{
+                    padding: window.innerWidth <= 768 ? '1.25rem' : '1.5rem',
+                    border: '2px dashed #d1d5db',
+                    borderRadius: '12px',
+                    background: 'transparent',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    textAlign: 'center',
+                    minHeight: '120px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.75rem'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.borderColor = '#10b981';
+                    e.target.style.background = '#ecfdf5';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.borderColor = '#d1d5db';
+                    e.target.style.background = 'transparent';
+                  }}
+                >
+                  <div style={{ fontSize: '2rem' }}>📋</div>
+                  <p style={{ 
+                    fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem', 
+                    fontWeight: '600', 
+                    color: '#1e293b',
+                    margin: 0
+                  }}>
+                    Gestionar Pedidos
+                  </p>
+                </button>
+              )}
+              
+              {authState.user?.role === ROLES.CAJERO && (
+                <button style={{
+                  padding: window.innerWidth <= 768 ? '1.25rem' : '1.5rem',
+                  border: '2px dashed #d1d5db',
+                  borderRadius: '12px',
+                  background: 'transparent',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  textAlign: 'center',
+                  minHeight: '120px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.75rem'
+                }}>
+                  <div style={{ fontSize: '2rem' }}>💳</div>
+                  <p style={{ 
+                    fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem', 
+                    fontWeight: '600', 
+                    color: '#1e293b',
+                    margin: 0
+                  }}>
+                    Facturación
+                  </p>
+                </button>
+              )}
+              
+              {authState.user?.role === ROLES.ADMIN && (
+                <React.Fragment>
+                  <button style={{
+                    padding: window.innerWidth <= 768 ? '1.25rem' : '1.5rem',
+                    border: '2px dashed #d1d5db',
+                    borderRadius: '12px',
+                    background: 'transparent',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    textAlign: 'center',
+                    minHeight: '120px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.75rem'
+                  }}>
+                    <div style={{ fontSize: '2rem' }}>👥</div>
+                    <p style={{ 
+                      fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem', 
+                      fontWeight: '600', 
+                      color: '#1e293b',
+                      margin: 0
+                    }}>
+                      Empleados
+                    </p>
+                  </button>
+                  <button style={{
+                    padding: window.innerWidth <= 768 ? '1.25rem' : '1.5rem',
+                    border: '2px dashed #d1d5db',
+                    borderRadius: '12px',
+                    background: 'transparent',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    textAlign: 'center',
+                    minHeight: '120px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.75rem'
+                  }}>
+                    <div style={{ fontSize: '2rem' }}>📦</div>
+                    <p style={{ 
+                      fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem', 
+                      fontWeight: '600', 
+                      color: '#1e293b',
+                      margin: 0
+                    }}>
+                      Inventario
+                    </p>
+                  </button>
+                </React.Fragment>
+              )}
+            </div>
+          </div>
     </div>
   );
 }

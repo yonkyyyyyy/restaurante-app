@@ -190,26 +190,72 @@ export default function Orders() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f8fafc', padding: '1.5rem', position: 'relative' }}>
-      <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1e293b' }}>Panel de Pedidos</h1>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ fontSize: '0.875rem', color: '#64748b' }}>Pedidos hoy: {localOrders.length}</div>
-          
-          {/* Botones de control */}
+    <div style={{ 
+      minHeight: '100vh', 
+      background: '#f8fafc', 
+      padding: window.innerWidth <= 768 ? '1rem' : '1.5rem', 
+      position: 'relative' 
+    }}>
+      {/* Header responsive */}
+      <header style={{ 
+        display: 'flex', 
+        flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
+        alignItems: window.innerWidth <= 768 ? 'stretch' : 'center', 
+        justifyContent: 'space-between', 
+        marginBottom: '1.5rem',
+        gap: window.innerWidth <= 768 ? '1rem' : '0'
+      }}>
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '0.5rem'
+        }}>
+          <h1 style={{ 
+            fontSize: window.innerWidth <= 768 ? '1.25rem' : '1.5rem', 
+            fontWeight: '600', 
+            color: '#1e293b',
+            margin: 0
+          }}>
+            Panel de Pedidos
+          </h1>
+          <div style={{ 
+            fontSize: window.innerWidth <= 768 ? '0.75rem' : '0.875rem', 
+            color: '#64748b',
+            background: '#e2e8f0',
+            padding: '0.25rem 0.5rem',
+            borderRadius: '6px'
+          }}>
+            {localOrders.length} pedidos
+          </div>
+        </div>
+        
+        {/* Botones de control - Responsive */}
+        <div style={{ 
+          display: 'flex', 
+          flexWrap: 'wrap',
+          gap: '0.5rem',
+          justifyContent: window.innerWidth <= 768 ? 'center' : 'flex-end'
+        }}>
           <button 
             onClick={refreshOrders}
             style={{
               background: '#3b82f6',
               color: 'white',
               border: 'none',
-              borderRadius: '6px',
-              padding: '0.5rem 1rem',
-              fontSize: '0.75rem',
-              cursor: 'pointer'
+              borderRadius: '8px',
+              padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.5rem 1rem',
+              fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem',
+              cursor: 'pointer',
+              minHeight: '44px',
+              minWidth: '44px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.25rem'
             }}
           >
-            🔄 Actualizar
+            🔄 <span style={{ display: window.innerWidth <= 480 ? 'none' : 'inline' }}>Actualizar</span>
           </button>
           
           <button 
@@ -218,13 +264,18 @@ export default function Orders() {
               background: '#ef4444',
               color: 'white',
               border: 'none',
-              borderRadius: '6px',
-              padding: '0.5rem 1rem',
-              fontSize: '0.75rem',
-              cursor: 'pointer'
+              borderRadius: '8px',
+              padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.5rem 1rem',
+              fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem',
+              cursor: 'pointer',
+              minHeight: '44px',
+              minWidth: '44px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.25rem'
             }}
           >
-            🗑️ Limpiar
+            🗑️ <span style={{ display: window.innerWidth <= 480 ? 'none' : 'inline' }}>Limpiar</span>
           </button>
           
           <button 
@@ -244,232 +295,314 @@ export default function Orders() {
               background: '#8b5cf6',
               color: 'white',
               border: 'none',
-              borderRadius: '6px',
-              padding: '0.5rem 1rem',
-              fontSize: '0.75rem',
-              cursor: 'pointer'
+              borderRadius: '8px',
+              padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.5rem 1rem',
+              fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem',
+              cursor: 'pointer',
+              minHeight: '44px',
+              minWidth: '44px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.25rem'
             }}
           >
-            🔍 Debug
+            🔍 <span style={{ display: window.innerWidth <= 480 ? 'none' : 'inline' }}>Debug</span>
           </button>
           
           <button 
-            onClick={() => {
-              // Crear un pedido de prueba directo
+            onClick={async () => {
               const testOrder = {
-                id: Date.now(),
-                client: 'Cliente de Prueba',
+                tableId: 'test',
+                client: 'Cliente Test',
                 phone: '999999999',
-                total: 25.50,
-                status: 'pending',
-                payment: 'unpaid',
-                createdAt: new Date().toISOString(),
-                source: 'test',
-                items: [
-                  { name: 'Producto de Prueba', quantity: 1, price: 25.50 }
-                ]
+                items: [{ name: 'Producto Test', quantity: 1, price: 10 }],
+                total: 10,
+                payment: 'unpaid'
               };
               
-              // Obtener pedidos actuales
-              const currentOrders = JSON.parse(localStorage.getItem('restaurant-orders') || '[]');
-              const updatedOrders = [...currentOrders, testOrder];
-              
-              // Guardar en localStorage
-              localStorage.setItem('restaurant-orders', JSON.stringify(updatedOrders));
-              console.log('🧪 Pedido de prueba creado:', testOrder);
-              console.log('🧪 Total de pedidos:', updatedOrders.length);
-              
-              // Recargar página
-              window.location.reload();
-            }}
-            style={{
-              background: '#10b981',
-              color: 'white',
-              border: 'none',
-              borderRadius: '6px',
-              padding: '0.5rem 1rem',
-              fontSize: '0.75rem',
-              cursor: 'pointer'
-            }}
-          >
-            🧪 Test
-          </button>
-          
-          
-          
-        <button 
-          onClick={async () => {
-            // Crear pedido de prueba en el servidor
-            const testOrder = {
-              tableId: 'test',
-              client: 'Cliente Test',
-              phone: '999999999',
-              items: [{ name: 'Producto Test', quantity: 1, price: 10 }],
-              total: 10,
-              payment: 'unpaid'
-            };
-            
-            try {
-              const response = await fetch('http://192.168.0.9:3001/api/orders', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(testOrder)
-              });
-              
-              if (response.ok) {
-                console.log('🧪 Pedido de prueba creado en servidor');
-                loadOrdersFromServer(); // Recargar pedidos
+              try {
+                const response = await fetch('http://192.168.0.9:3001/api/orders', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(testOrder)
+                });
+                
+                if (response.ok) {
+                  console.log('🧪 Pedido de prueba creado en servidor');
+                  loadOrdersFromServer();
+                }
+              } catch (error) {
+                console.error('Error al crear pedido de prueba:', error);
               }
-            } catch (error) {
-              console.error('Error al crear pedido de prueba:', error);
-            }
-          }}
+            }}
             style={{
               background: '#059669',
               color: 'white',
               border: 'none',
-              borderRadius: '6px',
-              padding: '0.5rem 1rem',
-              fontSize: '0.75rem',
-              cursor: 'pointer'
+              borderRadius: '8px',
+              padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.5rem 1rem',
+              fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem',
+              cursor: 'pointer',
+              minHeight: '44px',
+              minWidth: '44px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.25rem'
             }}
           >
-            🧪 Test
+            🧪 <span style={{ display: window.innerWidth <= 480 ? 'none' : 'inline' }}>Test</span>
           </button>
-              
         </div>
       </header>
 
-      <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
-        {localOrders.map(order => (
-          <article key={order.id} style={{ 
-            background: 'white', 
-            borderRadius: '12px', 
-            padding: '1rem', 
-            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-            transition: 'box-shadow 0.2s ease'
+      {/* Lista de pedidos - Responsive */}
+      <main style={{ 
+        display: 'grid', 
+        gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))', 
+        gap: '1rem' 
+      }}>
+        {localOrders.length === 0 ? (
+          <div style={{
+            gridColumn: '1 / -1',
+            textAlign: 'center',
+            padding: '3rem 1rem',
+            background: 'white',
+            borderRadius: '12px',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
           }}>
-            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-              <div>
-                <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Pedido #{order.id}</div>
-                <div style={{ fontSize: '1.125rem', fontWeight: '500', marginTop: '0.25rem', color: '#1e293b' }}>{order.client}</div>
-                <div style={{ fontSize: '0.875rem', color: '#64748b' }}>{order.phone}</div>
-                {order.tableId && (
+            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📋</div>
+            <h3 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#1e293b', marginBottom: '0.5rem' }}>
+              No hay pedidos
+            </h3>
+            <p style={{ fontSize: '0.875rem', color: '#64748b' }}>
+              Los pedidos aparecerán aquí cuando los clientes hagan sus órdenes
+            </p>
+          </div>
+        ) : (
+          localOrders.map(order => (
+            <article key={order.id} style={{ 
+              background: 'white', 
+              borderRadius: '12px', 
+              padding: window.innerWidth <= 768 ? '1rem' : '1rem', 
+              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+              transition: 'box-shadow 0.2s ease',
+              border: '1px solid #e2e8f0'
+            }}>
+              {/* Header del pedido */}
+              <div style={{ 
+                display: 'flex', 
+                flexDirection: window.innerWidth <= 480 ? 'column' : 'row',
+                alignItems: window.innerWidth <= 480 ? 'stretch' : 'flex-start', 
+                justifyContent: 'space-between',
+                gap: window.innerWidth <= 480 ? '0.75rem' : '0',
+                marginBottom: '1rem'
+              }}>
+                <div style={{ flex: 1 }}>
                   <div style={{ 
-                    fontSize: '0.75rem', 
-                    color: '#1e40af', 
-                    background: '#dbeafe', 
-                    padding: '0.125rem 0.375rem', 
-                    borderRadius: '4px',
-                    display: 'inline-block',
-                    marginTop: '0.25rem'
+                    fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem', 
+                    color: '#64748b',
+                    marginBottom: '0.25rem'
                   }}>
-                    📱 Mesa {order.tableId}
+                    Pedido #{order.id}
                   </div>
-                )}
-              </div>
-              <div style={{ textAlign: 'right' }}>
-                <div style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  padding: '0.25rem 0.75rem',
-                  borderRadius: '9999px',
-                  fontSize: '0.875rem',
-                  fontWeight: '500',
-                  ...statusBadge(order.status)
-                }}>
-                  {order.status}
+                  <div style={{ 
+                    fontSize: window.innerWidth <= 768 ? '1.25rem' : '1.125rem', 
+                    fontWeight: '600', 
+                    marginBottom: '0.25rem', 
+                    color: '#1e293b' 
+                  }}>
+                    {order.client}
+                  </div>
+                  <div style={{ 
+                    fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem', 
+                    color: '#64748b',
+                    marginBottom: '0.5rem'
+                  }}>
+                    📞 {order.phone}
+                  </div>
+                  {order.tableId && (
+                    <div style={{ 
+                      fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem', 
+                      color: '#1e40af', 
+                      background: '#dbeafe', 
+                      padding: '0.25rem 0.5rem', 
+                      borderRadius: '6px',
+                      display: 'inline-block'
+                    }}>
+                      📱 Mesa {order.tableId}
+                    </div>
+                  )}
                 </div>
-                <div style={{ marginTop: '0.5rem', fontSize: '1.125rem', fontWeight: '600', color: '#1e293b' }}>S/ {order.total.toFixed(2)}</div>
-                <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{new Date(order.createdAt).toLocaleTimeString()}</div>
+                
+                <div style={{ 
+                  textAlign: window.innerWidth <= 480 ? 'left' : 'right',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.5rem'
+                }}>
+                  <div style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    padding: '0.375rem 0.75rem',
+                    borderRadius: '9999px',
+                    fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
+                    fontWeight: '500',
+                    ...statusBadge(order.status)
+                  }}>
+                    {order.status}
+                  </div>
+                  <div style={{ 
+                    fontSize: window.innerWidth <= 768 ? '1.25rem' : '1.125rem', 
+                    fontWeight: '700', 
+                    color: '#1e293b' 
+                  }}>
+                    S/ {order.total.toFixed(2)}
+                  </div>
+                  <div style={{ 
+                    fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem', 
+                    color: '#64748b' 
+                  }}>
+                    {new Date(order.createdAt).toLocaleTimeString()}
+                  </div>
+                </div>
               </div>
-            </div>
 
-            <div style={{ marginTop: '1rem', display: 'flex', gap: '0.5rem' }}>
-              <button 
-                onClick={() => cycleStatus(order.id)} 
-                style={{
-                  flex: 1,
-                  padding: '0.5rem 0.75rem',
-                  borderRadius: '8px',
-                  border: '1px solid #e2e8f0',
-                  fontSize: '0.875rem',
-                  background: 'white',
-                  cursor: 'pointer',
-                  transition: 'background-color 0.2s ease'
-                }}
-                onMouseEnter={(e) => e.target.style.background = '#f8fafc'}
-                onMouseLeave={(e) => e.target.style.background = 'white'}
-              >
-                Cambiar estado
-              </button>
-              <button 
-                onClick={() => markPaid(order.id)} 
-                style={{
-                  padding: '0.5rem 0.75rem',
-                  borderRadius: '8px',
-                  background: '#10b981',
-                  color: 'white',
-                  fontSize: '0.875rem',
-                  border: 'none',
-                  cursor: 'pointer',
-                  transition: 'background-color 0.2s ease'
-                }}
-                onMouseEnter={(e) => e.target.style.background = '#059669'}
-                onMouseLeave={(e) => e.target.style.background = '#10b981'}
-              >
-                Marcar pagado
-              </button>
-            </div>
+              {/* Botones de acción - Responsive */}
+              <div style={{ 
+                display: 'grid',
+                gridTemplateColumns: window.innerWidth <= 480 ? '1fr' : '1fr 1fr',
+                gap: '0.5rem',
+                marginBottom: '0.75rem'
+              }}>
+                <button 
+                  onClick={() => cycleStatus(order.id)} 
+                  style={{
+                    padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.5rem 0.75rem',
+                    borderRadius: '8px',
+                    border: '1px solid #e2e8f0',
+                    fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
+                    background: 'white',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    minHeight: '44px',
+                    fontWeight: '500'
+                  }}
+                  onMouseEnter={(e) => e.target.style.background = '#f8fafc'}
+                  onMouseLeave={(e) => e.target.style.background = 'white'}
+                >
+                  🔄 Cambiar estado
+                </button>
+                <button 
+                  onClick={() => markPaid(order.id)} 
+                  style={{
+                    padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.5rem 0.75rem',
+                    borderRadius: '8px',
+                    background: '#10b981',
+                    color: 'white',
+                    fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    minHeight: '44px',
+                    fontWeight: '500'
+                  }}
+                  onMouseEnter={(e) => e.target.style.background = '#059669'}
+                  onMouseLeave={(e) => e.target.style.background = '#10b981'}
+                >
+                  💰 Marcar pagado
+                </button>
+              </div>
 
-            <div style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <button 
-                onClick={() => setSelected(order)} 
-                style={{ fontSize: '0.875rem', color: '#0ea5e9', cursor: 'pointer', textDecoration: 'none' }}
-                onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
-                onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
-              >
-                Ver detalle
-              </button>
-              <button 
-                onClick={() => updateOrder(order.id, { status: 'cancelled' })} 
-                style={{ fontSize: '0.875rem', color: '#ef4444', cursor: 'pointer', textDecoration: 'none' }}
-                onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
-                onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
-              >
-                Cancelar
-              </button>
-            </div>
-          </article>
-        ))}
+              {/* Botones secundarios */}
+              <div style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '0.5rem'
+              }}>
+                <button 
+                  onClick={() => setSelected(order)} 
+                  style={{ 
+                    fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem', 
+                    color: '#0ea5e9', 
+                    cursor: 'pointer', 
+                    textDecoration: 'none',
+                    background: 'none',
+                    border: 'none',
+                    padding: '0.5rem',
+                    borderRadius: '6px',
+                    transition: 'background-color 0.2s ease',
+                    minHeight: '44px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.25rem'
+                  }}
+                  onMouseEnter={(e) => e.target.style.background = '#f0f9ff'}
+                  onMouseLeave={(e) => e.target.style.background = 'transparent'}
+                >
+                  👁️ Ver detalle
+                </button>
+                <button 
+                  onClick={() => updateOrder(order.id, { status: 'cancelled' })} 
+                  style={{ 
+                    fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem', 
+                    color: '#ef4444', 
+                    cursor: 'pointer', 
+                    textDecoration: 'none',
+                    background: 'none',
+                    border: 'none',
+                    padding: '0.5rem',
+                    borderRadius: '6px',
+                    transition: 'background-color 0.2s ease',
+                    minHeight: '44px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.25rem'
+                  }}
+                  onMouseEnter={(e) => e.target.style.background = '#fef2f2'}
+                  onMouseLeave={(e) => e.target.style.background = 'transparent'}
+                >
+                  ❌ Cancelar
+                </button>
+              </div>
+            </article>
+          ))
+        )}
       </main>
 
-      {/* Botón flotante nuevo pedido */}
+      {/* Botón flotante nuevo pedido - Responsive */}
       <button 
         onClick={() => setShowNew(true)} 
         style={{
           position: 'fixed',
-          bottom: '1.5rem',
-          right: '1.5rem',
+          bottom: window.innerWidth <= 768 ? '1rem' : '1.5rem',
+          right: window.innerWidth <= 768 ? '1rem' : '1.5rem',
           background: '#0ea5e9',
           color: 'white',
-          padding: '0.75rem 1.25rem',
+          padding: window.innerWidth <= 768 ? '1rem 1.5rem' : '0.75rem 1.25rem',
           borderRadius: '9999px',
           boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
           border: 'none',
           cursor: 'pointer',
-          fontSize: '0.875rem',
-          fontWeight: '500',
-          transition: 'background-color 0.2s ease'
+          fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
+          fontWeight: '600',
+          transition: 'all 0.2s ease',
+          minHeight: '44px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          zIndex: 1000
         }}
         onMouseEnter={(e) => e.target.style.background = '#0284c7'}
         onMouseLeave={(e) => e.target.style.background = '#0ea5e9'}
       >
-        + Nuevo Pedido
+        <span style={{ fontSize: window.innerWidth <= 768 ? '1.25rem' : '1rem' }}>+</span>
+        <span style={{ display: window.innerWidth <= 480 ? 'none' : 'inline' }}>Nuevo Pedido</span>
       </button>
 
-      {/* Modal detalle */}
+      {/* Modal detalle - Responsive */}
       {selected && (
         <div style={{
           position: 'fixed',
@@ -478,45 +611,126 @@ export default function Orders() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '1rem'
+          padding: window.innerWidth <= 768 ? '0.5rem' : '1rem',
+          zIndex: 2000
         }}>
           <div style={{
             background: 'white',
             borderRadius: '12px',
             width: '100%',
-            maxWidth: '32rem',
-            padding: '1.5rem'
+            maxWidth: window.innerWidth <= 768 ? '100%' : '32rem',
+            maxHeight: window.innerWidth <= 768 ? '90vh' : '80vh',
+            padding: window.innerWidth <= 768 ? '1rem' : '1.5rem',
+            overflowY: 'auto'
           }}>
-            <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-              <h2 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#1e293b' }}>Detalle Pedido #{selected.id}</h2>
+            <header style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'space-between', 
+              marginBottom: '1rem',
+              flexWrap: 'wrap',
+              gap: '0.5rem'
+            }}>
+              <h2 style={{ 
+                fontSize: window.innerWidth <= 768 ? '1.25rem' : '1.125rem', 
+                fontWeight: '600', 
+                color: '#1e293b',
+                margin: 0
+              }}>
+                Detalle Pedido #{selected.id}
+              </h2>
               <button 
                 onClick={() => setSelected(null)} 
-                style={{ color: '#64748b', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.25rem' }}
+                style={{ 
+                  color: '#64748b', 
+                  background: 'none', 
+                  border: 'none', 
+                  cursor: 'pointer', 
+                  fontSize: '1.5rem',
+                  padding: '0.5rem',
+                  borderRadius: '50%',
+                  minHeight: '44px',
+                  minWidth: '44px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
               >
                 ×
               </button>
             </header>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.75rem' }}>
-              <div style={{ fontSize: '0.875rem', color: '#64748b' }}>Cliente: {selected.client} — {selected.phone}</div>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: '1fr', 
+              gap: '1rem' 
+            }}>
+              <div style={{ 
+                fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem', 
+                color: '#64748b',
+                background: '#f8fafc',
+                padding: '0.75rem',
+                borderRadius: '8px'
+              }}>
+                <strong>Cliente:</strong> {selected.client}<br/>
+                <strong>Teléfono:</strong> {selected.phone}
+              </div>
               <div>
-                <h3 style={{ fontWeight: '500', color: '#1e293b' }}>Items</h3>
-                <ul style={{ marginTop: '0.5rem', listStyle: 'disc', paddingLeft: '1.25rem', fontSize: '0.875rem' }}>
+                <h3 style={{ 
+                  fontWeight: '600', 
+                  color: '#1e293b',
+                  fontSize: window.innerWidth <= 768 ? '1.125rem' : '1rem',
+                  marginBottom: '0.75rem'
+                }}>
+                  📋 Items del Pedido
+                </h3>
+                <ul style={{ 
+                  marginTop: '0.5rem', 
+                  listStyle: 'none', 
+                  padding: 0, 
+                  fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.5rem'
+                }}>
                   {selected.items.map((it, idx) => (
-                    <li key={idx} style={{ color: '#64748b' }}>
-                      {it.quantity} x {it.name} — S/ {it.price.toFixed(2)}
+                    <li key={idx} style={{ 
+                      color: '#1e293b',
+                      background: 'white',
+                      padding: '0.75rem',
+                      borderRadius: '8px',
+                      border: '1px solid #e2e8f0',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
+                    }}>
+                      <span>
+                        <strong>{it.quantity}x</strong> {it.name}
+                      </span>
+                      <span style={{ fontWeight: '600', color: '#059669' }}>
+                        S/ {it.price.toFixed(2)}
+                      </span>
                     </li>
                   ))}
                 </ul>
               </div>
-              <div style={{ textAlign: 'right', fontWeight: '600', color: '#1e293b' }}>
-                Total: S/ {selected.total.toFixed(2)}
+              <div style={{ 
+                textAlign: 'center', 
+                fontWeight: '700', 
+                color: '#1e293b',
+                fontSize: window.innerWidth <= 768 ? '1.25rem' : '1.125rem',
+                background: '#f0f9ff',
+                padding: '1rem',
+                borderRadius: '8px',
+                border: '2px solid #0ea5e9'
+              }}>
+                💰 Total: S/ {selected.total.toFixed(2)}
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* Modal nuevo pedido */}
+      {/* Modal nuevo pedido - Responsive */}
       {showNew && (
         <div style={{
           position: 'fixed',
@@ -525,144 +739,313 @@ export default function Orders() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '1rem'
+          padding: window.innerWidth <= 768 ? '0.5rem' : '1rem',
+          zIndex: 2000
         }}>
           <div style={{
             background: 'white',
             borderRadius: '12px',
             width: '100%',
-            maxWidth: '48rem',
-            padding: '1.5rem',
-            overflowY: 'auto',
-            maxHeight: '90vh'
+            maxWidth: window.innerWidth <= 768 ? '100%' : '48rem',
+            maxHeight: window.innerWidth <= 768 ? '95vh' : '90vh',
+            padding: window.innerWidth <= 768 ? '1rem' : '1.5rem',
+            overflowY: 'auto'
           }}>
-            <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-              <h2 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#1e293b' }}>Nuevo Pedido</h2>
+            <header style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'space-between', 
+              marginBottom: '1.5rem',
+              flexWrap: 'wrap',
+              gap: '0.5rem'
+            }}>
+              <h2 style={{ 
+                fontSize: window.innerWidth <= 768 ? '1.25rem' : '1.125rem', 
+                fontWeight: '600', 
+                color: '#1e293b',
+                margin: 0
+              }}>
+                📝 Nuevo Pedido
+              </h2>
               <button 
                 onClick={() => setShowNew(false)} 
-                style={{ color: '#64748b', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.25rem' }}
+                style={{ 
+                  color: '#64748b', 
+                  background: 'none', 
+                  border: 'none', 
+                  cursor: 'pointer', 
+                  fontSize: '1.5rem',
+                  padding: '0.5rem',
+                  borderRadius: '50%',
+                  minHeight: '44px',
+                  minWidth: '44px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
               >
                 ×
               </button>
             </header>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(auto-fit, minmax(250px, 1fr))', 
+              gap: '1.5rem' 
+            }}>
               {/* Cliente */}
               <div>
-                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#1e293b', marginBottom: '0.5rem' }}>Cliente</label>
+                <label style={{ 
+                  display: 'block', 
+                  fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem', 
+                  fontWeight: '600', 
+                  color: '#1e293b', 
+                  marginBottom: '0.75rem' 
+                }}>
+                  👤 Información del Cliente
+                </label>
                 <input 
                   value={client.name} 
                   onChange={e => setClient({ ...client, name: e.target.value })} 
-                  placeholder="Nombre" 
+                  placeholder="Nombre completo" 
                   style={{ 
-                    marginBottom: '0.5rem',
+                    marginBottom: '0.75rem',
                     width: '100%', 
-                    border: '1px solid #d1d5db', 
+                    border: '2px solid #e2e8f0', 
                     borderRadius: '8px', 
-                    padding: '0.5rem 0.75rem', 
-                    fontSize: '0.875rem' 
+                    padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.5rem 0.75rem', 
+                    fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
+                    minHeight: '44px'
                   }} 
                 />
                 <input 
                   value={client.phone} 
                   onChange={e => setClient({ ...client, phone: e.target.value })} 
-                  placeholder="Teléfono" 
+                  placeholder="Número de teléfono" 
                   style={{ 
                     width: '100%', 
-                    border: '1px solid #d1d5db', 
+                    border: '2px solid #e2e8f0', 
                     borderRadius: '8px', 
-                    padding: '0.5rem 0.75rem', 
-                    fontSize: '0.875rem' 
+                    padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.5rem 0.75rem', 
+                    fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
+                    minHeight: '44px',
+                    marginBottom: '1rem'
                   }} 
                 />
 
-                <label style={{ display: 'block', marginTop: '1rem', fontSize: '0.875rem', fontWeight: '500', color: '#1e293b', marginBottom: '0.5rem' }}>Método de pago</label>
+                <label style={{ 
+                  display: 'block', 
+                  fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem', 
+                  fontWeight: '600', 
+                  color: '#1e293b', 
+                  marginBottom: '0.5rem' 
+                }}>
+                  💳 Método de pago
+                </label>
                 <select 
                   value={payment} 
                   onChange={e => setPayment(e.target.value)} 
                   style={{ 
                     width: '100%', 
-                    border: '1px solid #d1d5db', 
+                    border: '2px solid #e2e8f0', 
                     borderRadius: '8px', 
-                    padding: '0.5rem 0.75rem', 
-                    fontSize: '0.875rem' 
+                    padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.5rem 0.75rem', 
+                    fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
+                    minHeight: '44px'
                   }}
                 >
-                  <option value="efectivo">Efectivo</option>
-                  <option value="tarjeta">Tarjeta</option>
-                  <option value="yape">Yape</option>
-                  <option value="plin">Plin</option>
+                  <option value="efectivo">💰 Efectivo</option>
+                  <option value="tarjeta">💳 Tarjeta</option>
+                  <option value="yape">📱 Yape</option>
+                  <option value="plin">📱 Plin</option>
                 </select>
               </div>
 
               {/* Productos */}
               <div>
-                <h3 style={{ fontWeight: '500', color: '#1e293b', marginBottom: '0.5rem' }}>Productos</h3>
-                <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <h3 style={{ 
+                  fontWeight: '600', 
+                  color: '#1e293b', 
+                  marginBottom: '1rem',
+                  fontSize: window.innerWidth <= 768 ? '1.125rem' : '1rem'
+                }}>
+                  🍽️ Productos Disponibles
+                </h3>
+                <div style={{ 
+                  maxHeight: '300px', 
+                  overflowY: 'auto',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '8px',
+                  padding: '0.5rem'
+                }}>
                   {restaurantState.menu.map(p => (
-                    <li key={p.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.875rem' }}>
-                      <span>{p.name} — S/ {p.price.toFixed(2)}</span>
+                    <div key={p.id} style={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'space-between', 
+                      fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
+                      padding: '0.75rem',
+                      borderBottom: '1px solid #f1f5f9',
+                      gap: '0.5rem'
+                    }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontWeight: '500', color: '#1e293b' }}>{p.name}</div>
+                        <div style={{ color: '#059669', fontWeight: '600' }}>S/ {p.price.toFixed(2)}</div>
+                      </div>
                       <button 
                         onClick={() => addToCart(p)} 
                         style={{ 
-                          padding: '0.25rem 0.5rem', 
+                          padding: window.innerWidth <= 768 ? '0.5rem 1rem' : '0.25rem 0.5rem', 
                           background: '#0ea5e9', 
                           color: 'white', 
                           borderRadius: '6px', 
-                          fontSize: '0.75rem',
+                          fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem',
                           border: 'none',
-                          cursor: 'pointer'
+                          cursor: 'pointer',
+                          minHeight: '44px',
+                          fontWeight: '500'
                         }}
                       >
-                        Añadir
+                        ➕ Añadir
                       </button>
-                    </li>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
             </div>
 
             {/* Carrito */}
             <div style={{ marginTop: '1.5rem' }}>
-              <h3 style={{ fontWeight: '500', color: '#1e293b', marginBottom: '0.5rem' }}>Carrito</h3>
-              {cart.length === 0 && <p style={{ fontSize: '0.875rem', color: '#64748b' }}>Vacío</p>}
-              {cart.length > 0 && (
-                <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', fontSize: '0.875rem' }}>
-                  {cart.map(item => (
-                    <li key={item.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <span>{item.qty} x {item.name}</span>
-                      <span>S/ {(item.qty * item.price).toFixed(2)}</span>
-                      <button 
-                        onClick={() => removeFromCart(item.id)} 
-                        style={{ color: '#ef4444', fontSize: '0.75rem', background: 'none', border: 'none', cursor: 'pointer' }}
-                      >
-                        X
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+              <h3 style={{ 
+                fontWeight: '600', 
+                color: '#1e293b', 
+                marginBottom: '1rem',
+                fontSize: window.innerWidth <= 768 ? '1.125rem' : '1rem'
+              }}>
+                🛒 Carrito de Compras
+              </h3>
+              {cart.length === 0 && (
+                <div style={{
+                  textAlign: 'center',
+                  padding: '2rem',
+                  background: '#f8fafc',
+                  borderRadius: '8px',
+                  color: '#64748b'
+                }}>
+                  <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🛒</div>
+                  <p style={{ fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem' }}>
+                    El carrito está vacío
+                  </p>
+                </div>
               )}
-              <div style={{ textAlign: 'right', fontWeight: '600', color: '#1e293b', marginTop: '0.5rem' }}>
-                Total: S/ {cart.reduce((s, p) => s + p.qty * p.price, 0).toFixed(2)}
-              </div>
+              {cart.length > 0 && (
+                <div style={{
+                  background: '#f8fafc',
+                  borderRadius: '8px',
+                  padding: '1rem',
+                  border: '1px solid #e2e8f0'
+                }}>
+                  {cart.map(item => (
+                    <div key={item.id} style={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'space-between',
+                      padding: '0.75rem',
+                      background: 'white',
+                      borderRadius: '6px',
+                      marginBottom: '0.5rem',
+                      fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem'
+                    }}>
+                      <span style={{ fontWeight: '500' }}>
+                        {item.qty} x {item.name}
+                      </span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <span style={{ fontWeight: '600', color: '#059669' }}>
+                          S/ {(item.qty * item.price).toFixed(2)}
+                        </span>
+                        <button 
+                          onClick={() => removeFromCart(item.id)} 
+                          style={{ 
+                            color: '#ef4444', 
+                            fontSize: '1.25rem', 
+                            background: 'none', 
+                            border: 'none', 
+                            cursor: 'pointer',
+                            padding: '0.25rem',
+                            borderRadius: '4px',
+                            minHeight: '32px',
+                            minWidth: '32px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          ❌
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                  <div style={{ 
+                    textAlign: 'center', 
+                    fontWeight: '700', 
+                    color: '#1e293b', 
+                    marginTop: '1rem',
+                    fontSize: window.innerWidth <= 768 ? '1.25rem' : '1.125rem',
+                    background: '#0ea5e9',
+                    color: 'white',
+                    padding: '1rem',
+                    borderRadius: '8px'
+                  }}>
+                    💰 Total: S/ {cart.reduce((s, p) => s + p.qty * p.price, 0).toFixed(2)}
+                  </div>
+                </div>
+              )}
             </div>
 
-            <footer style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'flex-end' }}>
+            <footer style={{ 
+              marginTop: '1.5rem', 
+              display: 'flex', 
+              justifyContent: 'center',
+              gap: '1rem',
+              flexWrap: 'wrap'
+            }}>
+              <button 
+                onClick={() => setShowNew(false)} 
+                style={{ 
+                  padding: window.innerWidth <= 768 ? '0.75rem 1.5rem' : '0.5rem 1rem', 
+                  background: '#6b7280', 
+                  color: 'white', 
+                  borderRadius: '8px', 
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'background-color 0.2s ease',
+                  fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
+                  minHeight: '44px',
+                  fontWeight: '500'
+                }}
+                onMouseEnter={(e) => e.target.style.background = '#4b5563'}
+                onMouseLeave={(e) => e.target.style.background = '#6b7280'}
+              >
+                ❌ Cancelar
+              </button>
               <button 
                 onClick={saveOrder} 
                 style={{ 
-                  padding: '0.5rem 1rem', 
+                  padding: window.innerWidth <= 768 ? '0.75rem 1.5rem' : '0.5rem 1rem', 
                   background: '#10b981', 
                   color: 'white', 
                   borderRadius: '8px', 
                   border: 'none',
                   cursor: 'pointer',
-                  transition: 'background-color 0.2s ease'
+                  transition: 'background-color 0.2s ease',
+                  fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
+                  minHeight: '44px',
+                  fontWeight: '600'
                 }}
                 onMouseEnter={(e) => e.target.style.background = '#059669'}
                 onMouseLeave={(e) => e.target.style.background = '#10b981'}
               >
-                Guardar Pedido
+                💾 Guardar Pedido
               </button>
             </footer>
           </div>
