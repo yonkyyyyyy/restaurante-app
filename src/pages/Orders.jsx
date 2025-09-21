@@ -193,7 +193,7 @@ export default function Orders() {
     <div style={{ 
       minHeight: '100vh', 
       background: '#f8fafc', 
-      padding: window.innerWidth <= 768 ? '1rem' : '1.5rem', 
+      padding: window.innerWidth <= 768 ? '0.5rem' : '1rem', 
       position: 'relative' 
     }}>
       {/* Header responsive */}
@@ -202,8 +202,8 @@ export default function Orders() {
         flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
         alignItems: window.innerWidth <= 768 ? 'stretch' : 'center', 
         justifyContent: 'space-between', 
-        marginBottom: '1.5rem',
-        gap: window.innerWidth <= 768 ? '1rem' : '0'
+        marginBottom: window.innerWidth <= 768 ? '1rem' : '1.5rem',
+        gap: window.innerWidth <= 768 ? '0.75rem' : '0'
       }}>
         <div style={{ 
           display: 'flex', 
@@ -235,7 +235,7 @@ export default function Orders() {
         <div style={{ 
           display: 'flex', 
           flexWrap: 'wrap',
-          gap: '0.5rem',
+          gap: window.innerWidth <= 768 ? '0.75rem' : '0.5rem',
           justifyContent: window.innerWidth <= 768 ? 'center' : 'flex-end'
         }}>
           <button 
@@ -245,11 +245,11 @@ export default function Orders() {
               color: 'white',
               border: 'none',
               borderRadius: '8px',
-              padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.5rem 1rem',
-              fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem',
+              padding: window.innerWidth <= 768 ? '0.625rem 0.875rem' : '0.5rem 0.875rem',
+              fontSize: window.innerWidth <= 768 ? '0.75rem' : '0.75rem',
               cursor: 'pointer',
-              minHeight: '44px',
-              minWidth: '44px',
+              minHeight: '40px',
+              minWidth: '40px',
               display: 'flex',
               alignItems: 'center',
               gap: '0.25rem'
@@ -265,11 +265,11 @@ export default function Orders() {
               color: 'white',
               border: 'none',
               borderRadius: '8px',
-              padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.5rem 1rem',
-              fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem',
+              padding: window.innerWidth <= 768 ? '0.625rem 0.875rem' : '0.5rem 0.875rem',
+              fontSize: window.innerWidth <= 768 ? '0.75rem' : '0.75rem',
               cursor: 'pointer',
-              minHeight: '44px',
-              minWidth: '44px',
+              minHeight: '40px',
+              minWidth: '40px',
               display: 'flex',
               alignItems: 'center',
               gap: '0.25rem'
@@ -296,11 +296,11 @@ export default function Orders() {
               color: 'white',
               border: 'none',
               borderRadius: '8px',
-              padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.5rem 1rem',
-              fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem',
+              padding: window.innerWidth <= 768 ? '0.625rem 0.875rem' : '0.5rem 0.875rem',
+              fontSize: window.innerWidth <= 768 ? '0.75rem' : '0.75rem',
               cursor: 'pointer',
-              minHeight: '44px',
-              minWidth: '44px',
+              minHeight: '40px',
+              minWidth: '40px',
               display: 'flex',
               alignItems: 'center',
               gap: '0.25rem'
@@ -340,11 +340,11 @@ export default function Orders() {
               color: 'white',
               border: 'none',
               borderRadius: '8px',
-              padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.5rem 1rem',
-              fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.75rem',
+              padding: window.innerWidth <= 768 ? '0.625rem 0.875rem' : '0.5rem 0.875rem',
+              fontSize: window.innerWidth <= 768 ? '0.75rem' : '0.75rem',
               cursor: 'pointer',
-              minHeight: '44px',
-              minWidth: '44px',
+              minHeight: '40px',
+              minWidth: '40px',
               display: 'flex',
               alignItems: 'center',
               gap: '0.25rem'
@@ -358,8 +358,8 @@ export default function Orders() {
       {/* Lista de pedidos - Responsive */}
       <main style={{ 
         display: 'grid', 
-        gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))', 
-        gap: '1rem' 
+        gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))', 
+        gap: window.innerWidth <= 768 ? '0.75rem' : '1rem' 
       }}>
         {localOrders.length === 0 ? (
           <div style={{
@@ -383,7 +383,7 @@ export default function Orders() {
             <article key={order.id} style={{ 
               background: 'white', 
               borderRadius: '12px', 
-              padding: window.innerWidth <= 768 ? '1rem' : '1rem', 
+              padding: window.innerWidth <= 768 ? '0.875rem' : '1rem', 
               boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
               transition: 'box-shadow 0.2s ease',
               border: '1px solid #e2e8f0'
