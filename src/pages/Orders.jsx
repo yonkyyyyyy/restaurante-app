@@ -988,11 +988,10 @@ export default function Orders() {
                   <div style={{ 
                     textAlign: 'center', 
                     fontWeight: '700', 
-                    color: '#1e293b', 
+                    color: 'white', 
                     marginTop: '1rem',
                     fontSize: window.innerWidth <= 768 ? '1.25rem' : '1.125rem',
                     background: '#0ea5e9',
-                    color: 'white',
                     padding: '1rem',
                     borderRadius: '8px'
                   }}>
