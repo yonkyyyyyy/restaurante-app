@@ -167,6 +167,13 @@ export default function Orders() {
       const order = localOrders.find(o => o.id === id);
       if (!order) return;
       
+      // NO permitir cambiar estado si está pagado
+      if (order.payment === 'paid') {
+        console.log('🚫 No se puede cambiar estado de pedido pagado');
+        alert('❌ No se puede cambiar el estado de un pedido ya pagado');
+        return;
+      }
+      
       const seq = ["pending", "preparing", "ready", "delivered"];
       const i = seq.indexOf(order.status);
       const next = i === -1 || i === seq.length - 1 ? seq[0] : seq[i+1];
@@ -534,40 +541,59 @@ export default function Orders() {
               }}>
                 <button 
                   onClick={() => cycleStatus(order.id)} 
+                  disabled={order.payment === 'paid'}
                   style={{
                     padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.5rem 0.75rem',
                     borderRadius: '8px',
                     border: '1px solid #e2e8f0',
                     fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
-                    background: 'white',
-                    cursor: 'pointer',
+                    background: order.payment === 'paid' ? '#f3f4f6' : 'white',
+                    color: order.payment === 'paid' ? '#9ca3af' : '#374151',
+                    cursor: order.payment === 'paid' ? 'not-allowed' : 'pointer',
                     transition: 'all 0.2s ease',
                     minHeight: '44px',
                     fontWeight: '500'
                   }}
-                  onMouseEnter={(e) => e.target.style.background = '#f8fafc'}
-                  onMouseLeave={(e) => e.target.style.background = 'white'}
+                  onMouseEnter={(e) => {
+                    if (order.payment !== 'paid') {
+                      e.target.style.background = '#f8fafc';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (order.payment !== 'paid') {
+                      e.target.style.background = 'white';
+                    }
+                  }}
                 >
-                  🔄 Cambiar estado
+                  {order.payment === 'paid' ? '🔒 Bloqueado' : '🔄 Cambiar estado'}
                 </button>
                 <button 
                   onClick={() => markPaid(order.id)} 
+                  disabled={order.payment === 'paid'}
                   style={{
                     padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.5rem 0.75rem',
                     borderRadius: '8px',
-                    background: '#10b981',
+                    background: order.payment === 'paid' ? '#6b7280' : '#10b981',
                     color: 'white',
                     fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
                     border: 'none',
-                    cursor: 'pointer',
+                    cursor: order.payment === 'paid' ? 'not-allowed' : 'pointer',
                     transition: 'all 0.2s ease',
                     minHeight: '44px',
                     fontWeight: '500'
                   }}
-                  onMouseEnter={(e) => e.target.style.background = '#059669'}
-                  onMouseLeave={(e) => e.target.style.background = '#10b981'}
+                  onMouseEnter={(e) => {
+                    if (order.payment !== 'paid') {
+                      e.target.style.background = '#059669';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (order.payment !== 'paid') {
+                      e.target.style.background = '#10b981';
+                    }
+                  }}
                 >
-                  💰 Marcar pagado
+                  {order.payment === 'paid' ? '✅ Pagado' : '💰 Marcar pagado'}
                 </button>
               </div>
 
