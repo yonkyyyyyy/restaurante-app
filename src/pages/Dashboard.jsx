@@ -158,13 +158,15 @@ function RecentOrders() {
               <div key={order.id} style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: window.innerWidth <= 768 ? '0.75rem' : '1rem',
-                padding: window.innerWidth <= 768 ? '1rem' : '0.75rem',
+                gap: window.innerWidth <= 768 ? '1rem' : '1.25rem',
+                padding: window.innerWidth <= 768 ? '1.25rem' : '1rem',
                 background: '#f8fafc',
-                borderRadius: '8px',
+                borderRadius: '12px',
                 border: '1px solid #e2e8f0',
                 flexDirection: window.innerWidth <= 480 ? 'column' : 'row',
-                textAlign: window.innerWidth <= 480 ? 'center' : 'left'
+                textAlign: window.innerWidth <= 480 ? 'center' : 'left',
+                marginBottom: '0.75rem',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
               }}>
                 <div style={{
                   width: window.innerWidth <= 768 ? '40px' : '32px',
@@ -427,29 +429,67 @@ export default function Dashboard() {
     }}>
       {/* Header */}
       <div style={{ 
-        marginBottom: window.innerWidth <= 768 ? '1.5rem' : '2rem',
-        textAlign: window.innerWidth <= 480 ? 'center' : 'left'
+        marginBottom: window.innerWidth <= 768 ? '2rem' : '2.5rem',
+        textAlign: window.innerWidth <= 480 ? 'center' : 'left',
+        background: 'white',
+        padding: window.innerWidth <= 768 ? '1.5rem' : '2rem',
+        borderRadius: '16px',
+        boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)',
+        border: '1px solid #e2e8f0'
       }}>
         <h1 style={{ 
-          fontSize: window.innerWidth <= 768 ? '1.75rem' : '2rem', 
-          fontWeight: 'bold', 
+          fontSize: window.innerWidth <= 768 ? '2rem' : '2.5rem', 
+          fontWeight: '800', 
           color: '#1e293b', 
-          marginBottom: '0.5rem',
-          margin: 0
+          marginBottom: '1rem',
+          margin: 0,
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text'
         }}>
           📊 Dashboard
         </h1>
-        <p style={{ 
-          color: '#64748b', 
-          fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
-          margin: 0,
-          background: '#e2e8f0',
-          padding: '0.5rem 1rem',
-          borderRadius: '8px',
-          display: 'inline-block'
+        <div style={{
+          display: 'flex',
+          flexDirection: window.innerWidth <= 480 ? 'column' : 'row',
+          alignItems: window.innerWidth <= 480 ? 'center' : 'flex-start',
+          gap: '1rem',
+          flexWrap: 'wrap'
         }}>
-          👋 Bienvenido, {authState.user?.name} - {getRoleDisplayName(authState.user?.role)}
-        </p>
+          <div style={{ 
+            color: '#64748b', 
+            fontSize: window.innerWidth <= 768 ? '1.125rem' : '1rem',
+            margin: 0,
+            background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
+            padding: '0.75rem 1.5rem',
+            borderRadius: '12px',
+            border: '1px solid #bae6fd',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            fontWeight: '500'
+          }}>
+            <span style={{ fontSize: '1.25rem' }}>👋</span>
+            <span>Bienvenido, <strong>{authState.user?.name}</strong></span>
+          </div>
+          <div style={{ 
+            color: '#059669', 
+            fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
+            margin: 0,
+            background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)',
+            padding: '0.75rem 1.5rem',
+            borderRadius: '12px',
+            border: '1px solid #a7f3d0',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            fontWeight: '600'
+          }}>
+            <span style={{ fontSize: '1.125rem' }}>👤</span>
+            <span>{getRoleDisplayName(authState.user?.role)}</span>
+          </div>
+        </div>
       </div>
 
       {/* Métricas principales */}
@@ -524,10 +564,10 @@ export default function Dashboard() {
               </h3>
             </div>
             <div style={{ 
-              padding: window.innerWidth <= 768 ? '1rem' : '1rem', 
+              padding: window.innerWidth <= 768 ? '1.25rem' : '1.5rem', 
               display: 'grid',
-              gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: window.innerWidth <= 768 ? '0.75rem' : '1rem'
+              gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(auto-fit, minmax(220px, 1fr))',
+              gap: window.innerWidth <= 768 ? '1rem' : '1.25rem'
             }}>
               <button 
                 onClick={() => {
@@ -546,19 +586,21 @@ export default function Dashboard() {
                   alert('Pedido de prueba creado!');
                 }}
                 style={{
-                  background: '#10b981',
+                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
                   color: 'white',
-                  padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.75rem 1.5rem',
-                  borderRadius: '8px',
+                  padding: window.innerWidth <= 768 ? '1rem 1.25rem' : '0.875rem 1.5rem',
+                  borderRadius: '12px',
                   border: 'none',
                   cursor: 'pointer',
-                  fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.875rem',
+                  fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
                   fontWeight: '600',
-                  minHeight: '44px',
+                  minHeight: '52px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '0.5rem'
+                  gap: '0.75rem',
+                  boxShadow: '0 4px 6px -1px rgba(16, 185, 129, 0.3)',
+                  transition: 'all 0.2s ease'
                 }}
               >
                 🧪 <span style={{ display: window.innerWidth <= 480 ? 'none' : 'inline' }}>Crear Pedido de Prueba</span>
@@ -572,19 +614,21 @@ export default function Dashboard() {
                   console.log('🔍 localStorage actual:', localStorage.getItem('restaurant-orders'));
                 }}
                 style={{
-                  background: '#2563eb',
+                  background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
                   color: 'white',
-                  padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.75rem 1.5rem',
-                  borderRadius: '8px',
+                  padding: window.innerWidth <= 768 ? '1rem 1.25rem' : '0.875rem 1.5rem',
+                  borderRadius: '12px',
                   border: 'none',
                   cursor: 'pointer',
-                  fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.875rem',
+                  fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
                   fontWeight: '600',
-                  minHeight: '44px',
+                  minHeight: '52px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '0.5rem'
+                  gap: '0.75rem',
+                  boxShadow: '0 4px 6px -1px rgba(37, 99, 235, 0.3)',
+                  transition: 'all 0.2s ease'
                 }}
               >
                 🔍 <span style={{ display: window.innerWidth <= 480 ? 'none' : 'inline' }}>Ver Estado</span>
@@ -598,19 +642,21 @@ export default function Dashboard() {
                   window.location.reload();
                 }}
                 style={{
-                  background: '#ef4444',
+                  background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
                   color: 'white',
-                  padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.75rem 1.5rem',
-                  borderRadius: '8px',
+                  padding: window.innerWidth <= 768 ? '1rem 1.25rem' : '0.875rem 1.5rem',
+                  borderRadius: '12px',
                   border: 'none',
                   cursor: 'pointer',
-                  fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.875rem',
+                  fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
                   fontWeight: '600',
-                  minHeight: '44px',
+                  minHeight: '52px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '0.5rem'
+                  gap: '0.75rem',
+                  boxShadow: '0 4px 6px -1px rgba(239, 68, 68, 0.3)',
+                  transition: 'all 0.2s ease'
                 }}
               >
                 🗑️ <span style={{ display: window.innerWidth <= 480 ? 'none' : 'inline' }}>Limpiar y Recargar</span>
@@ -625,19 +671,21 @@ export default function Dashboard() {
                   console.log('🔍 Número de pedidos en localStorage:', orders ? JSON.parse(orders).length : 0);
                 }}
                 style={{
-                  background: '#8b5cf6',
+                  background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
                   color: 'white',
-                  padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '0.75rem 1.5rem',
-                  borderRadius: '8px',
+                  padding: window.innerWidth <= 768 ? '1rem 1.25rem' : '0.875rem 1.5rem',
+                  borderRadius: '12px',
                   border: 'none',
                   cursor: 'pointer',
-                  fontSize: window.innerWidth <= 768 ? '0.875rem' : '0.875rem',
+                  fontSize: window.innerWidth <= 768 ? '1rem' : '0.875rem',
                   fontWeight: '600',
-                  minHeight: '44px',
+                  minHeight: '52px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '0.5rem'
+                  gap: '0.75rem',
+                  boxShadow: '0 4px 6px -1px rgba(139, 92, 246, 0.3)',
+                  transition: 'all 0.2s ease'
                 }}
               >
                 🔍 <span style={{ display: window.innerWidth <= 480 ? 'none' : 'inline' }}>Ver localStorage</span>
@@ -669,36 +717,41 @@ export default function Dashboard() {
               </h3>
             </div>
             <div style={{ 
-              padding: window.innerWidth <= 768 ? '1rem' : '1.25rem',
+              padding: window.innerWidth <= 768 ? '1.25rem' : '1.5rem',
               display: 'grid', 
-              gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(auto-fit, minmax(200px, 1fr))', 
-              gap: window.innerWidth <= 768 ? '0.75rem' : '1rem' 
+              gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(auto-fit, minmax(220px, 1fr))', 
+              gap: window.innerWidth <= 768 ? '1rem' : '1.25rem' 
             }}>
               {authState.user?.role === ROLES.EMBALADOR && (
                 <button 
                   onClick={() => window.location.href = '/orders'}
                   style={{
-                    padding: window.innerWidth <= 768 ? '1.25rem' : '1.5rem',
-                    border: '2px dashed #d1d5db',
-                    borderRadius: '12px',
-                    background: 'transparent',
+                    padding: window.innerWidth <= 768 ? '1.5rem' : '1.75rem',
+                    border: '2px solid #e2e8f0',
+                    borderRadius: '16px',
+                    background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
                     cursor: 'pointer',
-                    transition: 'all 0.2s ease',
+                    transition: 'all 0.3s ease',
                     textAlign: 'center',
-                    minHeight: '120px',
+                    minHeight: '140px',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '0.75rem'
+                    gap: '1rem',
+                    boxShadow: '0 2px 4px -1px rgba(0,0,0,0.1)'
                   }}
                   onMouseEnter={(e) => {
                     e.target.style.borderColor = '#10b981';
-                    e.target.style.background = '#ecfdf5';
+                    e.target.style.background = 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)';
+                    e.target.style.transform = 'translateY(-2px)';
+                    e.target.style.boxShadow = '0 8px 15px -3px rgba(16, 185, 129, 0.3)';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.borderColor = '#d1d5db';
-                    e.target.style.background = 'transparent';
+                    e.target.style.borderColor = '#e2e8f0';
+                    e.target.style.background = 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)';
+                    e.target.style.transform = 'translateY(0)';
+                    e.target.style.boxShadow = '0 2px 4px -1px rgba(0,0,0,0.1)';
                   }}
                 >
                   <div style={{ fontSize: '2rem' }}>📋</div>
@@ -715,19 +768,20 @@ export default function Dashboard() {
               
               {authState.user?.role === ROLES.CAJERO && (
                 <button style={{
-                  padding: window.innerWidth <= 768 ? '1.25rem' : '1.5rem',
-                  border: '2px dashed #d1d5db',
-                  borderRadius: '12px',
-                  background: 'transparent',
+                  padding: window.innerWidth <= 768 ? '1.5rem' : '1.75rem',
+                  border: '2px solid #e2e8f0',
+                  borderRadius: '16px',
+                  background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
                   cursor: 'pointer',
-                  transition: 'all 0.2s ease',
+                  transition: 'all 0.3s ease',
                   textAlign: 'center',
-                  minHeight: '120px',
+                  minHeight: '140px',
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '0.75rem'
+                  gap: '1rem',
+                  boxShadow: '0 2px 4px -1px rgba(0,0,0,0.1)'
                 }}>
                   <div style={{ fontSize: '2rem' }}>💳</div>
                   <p style={{ 
@@ -744,19 +798,20 @@ export default function Dashboard() {
               {authState.user?.role === ROLES.ADMIN && (
                 <React.Fragment>
                   <button style={{
-                    padding: window.innerWidth <= 768 ? '1.25rem' : '1.5rem',
-                    border: '2px dashed #d1d5db',
-                    borderRadius: '12px',
-                    background: 'transparent',
+                    padding: window.innerWidth <= 768 ? '1.5rem' : '1.75rem',
+                    border: '2px solid #e2e8f0',
+                    borderRadius: '16px',
+                    background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
                     cursor: 'pointer',
-                    transition: 'all 0.2s ease',
+                    transition: 'all 0.3s ease',
                     textAlign: 'center',
-                    minHeight: '120px',
+                    minHeight: '140px',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '0.75rem'
+                    gap: '1rem',
+                    boxShadow: '0 2px 4px -1px rgba(0,0,0,0.1)'
                   }}>
                     <div style={{ fontSize: '2rem' }}>👥</div>
                     <p style={{ 
@@ -769,19 +824,20 @@ export default function Dashboard() {
                     </p>
                   </button>
                   <button style={{
-                    padding: window.innerWidth <= 768 ? '1.25rem' : '1.5rem',
-                    border: '2px dashed #d1d5db',
-                    borderRadius: '12px',
-                    background: 'transparent',
+                    padding: window.innerWidth <= 768 ? '1.5rem' : '1.75rem',
+                    border: '2px solid #e2e8f0',
+                    borderRadius: '16px',
+                    background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
                     cursor: 'pointer',
-                    transition: 'all 0.2s ease',
+                    transition: 'all 0.3s ease',
                     textAlign: 'center',
-                    minHeight: '120px',
+                    minHeight: '140px',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '0.75rem'
+                    gap: '1rem',
+                    boxShadow: '0 2px 4px -1px rgba(0,0,0,0.1)'
                   }}>
                     <div style={{ fontSize: '2rem' }}>📦</div>
                     <p style={{ 
