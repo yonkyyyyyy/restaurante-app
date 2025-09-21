@@ -453,7 +453,8 @@ export default function Dashboard() {
           alignItems: window.innerWidth <= 480 ? 'center' : 'flex-start',
           gap: window.innerWidth <= 480 ? '0.5rem' : '0.75rem',
           flexWrap: 'wrap',
-          width: '100%'
+          width: '100%',
+          overflow: 'visible'
         }}>
           <div style={{ 
             color: '#64748b', 
@@ -475,7 +476,7 @@ export default function Dashboard() {
             minWidth: '0'
           }}>
             <span style={{ fontSize: '1rem' }}>👋</span>
-            <span>Bienvenido, <strong>{authState.user?.name}</strong></span>
+            <span>Bienvenido, <strong>{authState.user?.name || 'Usuario'}</strong></span>
           </div>
           <div style={{ 
             color: '#059669', 

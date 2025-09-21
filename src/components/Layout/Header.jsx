@@ -88,9 +88,9 @@ export default function Header({ onMenuClick, user, roleDisplayName }) {
                   {user?.name?.charAt(0) || 'U'}
                 </span>
               </div>
-              <div style={{ textAlign: 'left' }}>
-                <p style={{ fontSize: '0.875rem', fontWeight: '500', margin: 0 }}>{user?.name}</p>
-                <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.7)', margin: 0 }}>{roleDisplayName}</p>
+              <div style={{ textAlign: 'left', minWidth: '120px', overflow: 'visible' }}>
+                <p style={{ fontSize: '0.875rem', fontWeight: '500', margin: 0, whiteSpace: 'nowrap', overflow: 'visible' }}>{user?.name || 'Usuario'}</p>
+                <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.7)', margin: 0, whiteSpace: 'nowrap', overflow: 'visible' }}>{roleDisplayName}</p>
               </div>
               <svg style={{ width: '16px', height: '16px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
