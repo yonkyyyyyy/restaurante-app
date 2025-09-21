@@ -56,6 +56,8 @@ body {
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .logo {
@@ -80,6 +82,8 @@ body {
   display: flex;
   align-items: center;
   gap: 1rem;
+  flex-shrink: 0;
+  min-width: 0;
 }
 
 .user-avatar {
@@ -353,6 +357,45 @@ body {
 }
 
 /* Responsive */
+@media (max-width: 768px) {
+  .header {
+    padding: 0.75rem 1rem;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  
+  .logo {
+    font-size: 1.25rem;
+  }
+  
+  .user-info {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .user-info button {
+    min-width: 0;
+    flex: 1;
+    justify-content: center;
+  }
+  
+  .user-info button div {
+    min-width: 0;
+    overflow: visible;
+    white-space: nowrap;
+  }
+  
+  .user-info button p {
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: unset;
+  }
+}
+
 @media (min-width: 768px) {
   .sidebar {
     transform: translateX(0);
